@@ -1,33 +1,81 @@
 package com.odk02.ikavote.service.serviceImpl;
 
 import com.odk02.ikavote.models.Evenements;
+import com.odk02.ikavote.repository.EvenementsRepository;
 import com.odk02.ikavote.service.EvenementsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class EvenementsServiceImpl implements EvenementsService {
+
+  @Autowired
+  private EvenementsRepository evenementsRepository;
   @Override
   public Object ajouterEvenements(Evenements evenements) {
-    return null;
+
+    if(evenementsRepository.findByLibelle(evenements.getLibelle()) == null) {
+
+      evenementsRepository.save(evenements);
+
+      return "Evenements ajouter succès";
+    }else {
+      return "Cet evenements existe déjà";
+    }
   }
 
   @Override
   public Object supprimerEvenements(Long id) {
-    return null;
+
+    Optional<Evenements> evenements = evenementsRepository.findById(id);
+    if (evenements.isPresent()) {
+      return "Ce pays n'existe pas !";
+    }
+    else {
+
+      evenementsRepository.delete(evenements.get());
+      return "Pays supprimé avec succès";
+    }
   }
 
   @Override
   public Object ModifierEvenements(Evenements evenements, Long id) {
-    return null;
+    Optional<Evenements> eventsExiste = this.evenementsRepository.findById(id);
+    if (eventsExiste.isEmpty()) {
+      return "Pays non trouvé !";
+    }
+    else {
+      Evenements eventsMod = evenementsRepository.findById(id).get();
+      eventsMod.setLibelle(evenements.getLibelle());
+      eventsMod.setDateDebut(evenements.getDateDebut());
+      eventsMod.setDateFin(evenements.getDateFin());
+      eventsMod.setImages(evenements.getImages());
+      evenementsRepository.saveAndFlush(eventsMod);
+
+      return "Evenements modifier avec succès";
+    }
   }
 
   @Override
   public Object afficherEvenementsParId(Long id) {
-    return null;
+
+    Optional<Evenements> evenements = evenementsRepository.findById(id);
+
+    if (evenements.isEmpty()) {
+
+      return  "Cet evenements n'est pas trouvée !";
+    }
+    else {
+      return evenementsRepository.findById(id).get();
+    }
   }
 
   @Override
   public List<Evenements> afficherTousLesEvenements() {
-    return null;
+
+    return evenementsRepository.findAll();
   }
 }

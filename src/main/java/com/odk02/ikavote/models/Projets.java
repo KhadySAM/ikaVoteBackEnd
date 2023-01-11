@@ -1,12 +1,19 @@
 package com.odk02.ikavote.models;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.Date;
 
+
+@Entity
+@Table(name = "projets")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Projets {
 
 
@@ -19,10 +26,12 @@ public class Projets {
   private String libelle;
 
   @NotBlank
-  private String images;
-
-  @NotBlank
   @Size(max =50)
   private  String description;
+
+  @NotBlank
+  private String images;
+
+
 
 }
