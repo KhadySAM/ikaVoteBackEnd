@@ -7,16 +7,13 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table(name = "evenements")
+@Table(name = "criteres")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Evenements {
+public class Criteres {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,35 +21,17 @@ public class Evenements {
 
   @NotBlank
   @Size(max = 50)
-  private String libelle;
+  private String titre;
 
   @NotBlank
-  private Date dateDebut;
-
-  @NotBlank
-  private Date dateFin;
-
-  @NotBlank
-  private String images;
-
-  @NotBlank
-  private Long bareme;
-
-  @NotBlank
-  private Long coefficientUser;
-
-  @NotBlank
-  private Long coefficientJury;
-
-  @NotBlank
-  private Integer nbreVotant;
+  @Size(max =50)
+  private  String contenu;
 
 
   //Les jointures
-
-  @JoinColumn(name = "id_Ath")
+  @JoinColumn(name = "id_events")
   @ManyToOne
   private Evenements evenements;
-
-
 }
+
+

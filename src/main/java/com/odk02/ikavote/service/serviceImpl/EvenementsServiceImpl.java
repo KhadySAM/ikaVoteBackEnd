@@ -3,6 +3,7 @@ package com.odk02.ikavote.service.serviceImpl;
 import com.odk02.ikavote.models.Evenements;
 import com.odk02.ikavote.repository.EvenementsRepository;
 import com.odk02.ikavote.service.EvenementsService;
+import com.odk02.ikavote.service.ReferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +15,19 @@ public class EvenementsServiceImpl implements EvenementsService {
 
   @Autowired
   private EvenementsRepository evenementsRepository;
+
+  @Autowired
+  private ReferenceService referenceService;
   @Override
   public Object ajouterEvenements(Evenements evenements) {
 
     if(evenementsRepository.findByLibelle(evenements.getLibelle()) == null) {
 
-      evenementsRepository.save(evenements);
 
-      return "Evenements ajouter succès";
+
+      referenceService.generCode(evenements.getNbreVotant(),evenementsRepository.save(evenements));
+
+      return "Evenements ajouter avec succès";
     }else {
       return "Cet evenements existe déjà";
     }
@@ -32,12 +38,12 @@ public class EvenementsServiceImpl implements EvenementsService {
 
     Optional<Evenements> evenements = evenementsRepository.findById(id);
     if (evenements.isPresent()) {
-      return "Ce pays n'existe pas !";
+      return "Ce Evenements n'existe pas !";
     }
     else {
 
       evenementsRepository.delete(evenements.get());
-      return "Pays supprimé avec succès";
+      return "Evenements supprimé avec succès";
     }
   }
 
@@ -45,13 +51,18 @@ public class EvenementsServiceImpl implements EvenementsService {
   public Object ModifierEvenements(Evenements evenements, Long id) {
     Optional<Evenements> eventsExiste = this.evenementsRepository.findById(id);
     if (eventsExiste.isEmpty()) {
-      return "Pays non trouvé !";
+      return "Evenements non trouvé !";
     }
     else {
       Evenements eventsMod = evenementsRepository.findById(id).get();
       eventsMod.setLibelle(evenements.getLibelle());
       eventsMod.setDateDebut(evenements.getDateDebut());
       eventsMod.setDateFin(evenements.getDateFin());
+      eventsMod.setNbreVotant(evenements.getNbreVotant());
+      eventsMod.setBareme(evenements.getBareme());
+   //   eventsMod.setReference(evenements.getReference());
+      eventsMod.setCoefficientJury(evenements.getCoefficientJury());
+      eventsMod.setCoefficientUser(evenements.getCoefficientJury());
       eventsMod.setImages(evenements.getImages());
       evenementsRepository.saveAndFlush(eventsMod);
 

@@ -32,6 +32,9 @@ public class Projets {
   @NotBlank
   private String images;
 
+  //Les jointures
 
-
+  @JoinColumn(name = "id_events")
+  @ManyToOne
+  private Evenements evenements;
 }

@@ -9,20 +9,22 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "authentification")
+@Table(name = "questions")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Authentification {
+public class Questions {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  //champ obligatoire
   @NotBlank
-  @Size(max = 20)
-  private String libelle;
+  @Size(max = 50)
+  private String contenu;
 
 
-
+  @JoinColumn(name = "id_projets")
+  @ManyToOne
+  private Projets projets;
 }
