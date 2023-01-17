@@ -1,6 +1,7 @@
 package com.odk02.ikavote.controllers;
 
 import com.odk02.ikavote.img.ConfigImg;
+import com.odk02.ikavote.models.Evenements;
 import com.odk02.ikavote.models.Projets;
 import com.odk02.ikavote.service.ProjetsServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,49 +14,49 @@ import java.io.IOException;
 
 import java.util.List;
 
+@RestController
+@RequestMapping("/api/superadmin")
 public class ProjetController {
 
     @Autowired
     ProjetsServices projetsServices;
 
+  // Ajouter un projet
+  @PostMapping("/ajoutprojet")
+  @PostAuthorize("hasAuthority('SUPERADMIN')")
+  public Object addProjets(
+    @Param("libelle") String libelle,
+    @Param("description") String description,
+    @Param("id_events") Evenements id_events,
+    @Param("file") MultipartFile file) throws IOException {
 
-    // Afficher tous les evenements
-    @GetMapping("/getallpays")
-    @PostAuthorize("hasAuthority('ADMIN')")
-    public List<Projets> getAll() {
-
-        return projetsServices.afficherTousLesProjets();
-    }
-
-    // Afficher un pays par id
-    @GetMapping("/getonepays/{id}")
-    @PostAuthorize("hasAuthority('ADMIN')")
-    public Object afficherUnEventParId(@PathVariable Long id) {
-
-        return projetsServices.afficherProjetsParId(id);
-    }
+    Projets projets = new Projets();
+    projets.setLibelle(libelle);
+    projets.setDescription(description);
+    projets.setEvenements(id_events);
+    projets.setImages(ConfigImg.save(file,file.getOriginalFilename()));
 
 
-    // Ajouter un pays
-    @PostMapping("/ajoutpays")
-    @PostAuthorize("hasAuthority('SUPERADMIN')")
-    public Object addProjets(
-            @Param("libelle") String libelle,
-            @Param("description") String description,
-            @Param("file") MultipartFile file) throws IOException {
+    return projetsServices.ajouterProjets(projets);
 
-        Projets projets = new Projets();
-        projets.setLibelle(libelle);
-        projets.setDescription(description);
-        projets.setImages(ConfigImg.save(file,file.getOriginalFilename()));
+  }
 
+  @GetMapping("/getallprojet")
+  @PostAuthorize("hasAuthority('SUPERADMIN')")
+  public List<Projets> getAll() {
 
-        return projetsServices.ajouterProjets(projets);
+    return projetsServices.afficherTousLesProjets();
+  }
 
-    }
+  // Afficher un projet par id
+  @GetMapping("/getoneprojet/{id}")
+  @PostAuthorize("hasAuthority('SUPERADMIN')")
+  public Object afficherUnEventParId(@PathVariable Long id) {
 
+    return projetsServices.afficherProjetsParId(id);
+  }
 
-    @PutMapping("/modifier/{id}")
+    @PutMapping("/modifierprojet/{id}")
     @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object updatePays(@PathVariable Long id,
                              @Param("libelle") String libelle,
@@ -70,8 +71,8 @@ public class ProjetController {
         return projetsServices.ModifierProjets(projets, id);
     }
 
-    @DeleteMapping("/supprime/{id}")
-    @PostAuthorize("hasAuthority('ADMIN')")
+    @DeleteMapping("/supprimeprojet/{id}")
+    @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object deleteProjets(@PathVariable Long id) {
 
         return projetsServices.supprimerProjets(id);

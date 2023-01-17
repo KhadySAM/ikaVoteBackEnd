@@ -5,5 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface Critere extends JpaRepository<Criteres, Long> {
+public interface CriteresRepository extends JpaRepository<Criteres, Long> {
+
+  public Criteres findByTitre(String titre);
+
 }

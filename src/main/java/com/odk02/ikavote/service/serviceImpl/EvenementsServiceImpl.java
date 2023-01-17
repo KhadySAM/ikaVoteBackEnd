@@ -24,7 +24,6 @@ public class EvenementsServiceImpl implements EvenementsService {
     if(evenementsRepository.findByLibelle(evenements.getLibelle()) == null) {
 
 
-
       referenceService.generCode(evenements.getNbreVotant(),evenementsRepository.save(evenements));
 
       return "Evenements ajouter avec succès";
@@ -53,6 +52,7 @@ public class EvenementsServiceImpl implements EvenementsService {
     if (eventsExiste.isEmpty()) {
       return "Evenements non trouvé !";
     }
+
     else {
       Evenements eventsMod = evenementsRepository.findById(id).get();
       eventsMod.setLibelle(evenements.getLibelle());
@@ -60,10 +60,11 @@ public class EvenementsServiceImpl implements EvenementsService {
       eventsMod.setDateFin(evenements.getDateFin());
       eventsMod.setNbreVotant(evenements.getNbreVotant());
       eventsMod.setBareme(evenements.getBareme());
-   //   eventsMod.setReference(evenements.getReference());
       eventsMod.setCoefficientJury(evenements.getCoefficientJury());
       eventsMod.setCoefficientUser(evenements.getCoefficientJury());
+
       eventsMod.setImages(evenements.getImages());
+
       evenementsRepository.saveAndFlush(eventsMod);
 
       return "Evenements modifier avec succès";

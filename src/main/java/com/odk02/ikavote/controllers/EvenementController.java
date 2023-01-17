@@ -27,7 +27,7 @@ public class EvenementController {
 
     // Afficher tous les evenements
     @GetMapping("/getallpays")
-    @PostAuthorize("hasAuthority('ADMIN')")
+    @PostAuthorize("hasAuthority('SUPERADMIN')")
     public List<Evenements> getAll() {
 
         return evenementsService.afficherTousLesEvenements();
@@ -35,7 +35,7 @@ public class EvenementController {
 
     // Afficher un pays par id
     @GetMapping("/getonepays/{id}")
-    @PostAuthorize("hasAuthority('ADMIN')")
+    @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object afficherUnEventParId(@PathVariable Long id) {
 
         return evenementsService.afficherEvenementsParId(id);
@@ -44,7 +44,7 @@ public class EvenementController {
 
     // Ajouter un pays
     @PostMapping("/ajoutEvents")
-    //@PostAuthorize("hasAuthority('ADMIN')")
+    @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object addEvents(
             @Param("libelle") String libelle,
             @Param("dateDebut") Date dateDebut,
@@ -55,15 +55,7 @@ public class EvenementController {
             @Param("nbreVotant") Integer nbreVotant,
             @Param("file") MultipartFile file) throws IOException {
 
-      /*Random r=new Random();
-      List<String> reference=new ArrayList<>();
-      for (int i=0;i<nbreVotant;i++){
-        String element="";
-        for (int j=0;j<3;j++){
-          element+=r.nextInt(9);
-        }
-        reference.add(element);
-      }*/
+
         Evenements evenements = new Evenements();
         evenements.setLibelle(libelle);
         evenements.setDateDebut(dateDebut);
@@ -72,17 +64,21 @@ public class EvenementController {
         evenements.setCoefficientUser(coefficientUser);
         evenements.setCoefficientJury(coefficientJury);
         evenements.setNbreVotant(nbreVotant);
-        //evenements.setReference(reference);
         evenements.setImages(ConfigImg.save(file,file.getOriginalFilename()));
 
+        if (coefficientJury + coefficientUser != 100) {
+          return "Attention la somme des coefficients user et jury est toujours egale à 100% ";
+        }
+        else {
 
-        return evenementsService.ajouterEvenements(evenements);
+          return evenementsService.ajouterEvenements(evenements);
+        }
 
     }
 
 
     @PutMapping("/modifier/{id}")
-    @PostAuthorize("hasAuthority('ADMIN')")
+    @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object updatePays(@PathVariable Long id,
                              @Param("libelle") String libelle,
                              @Param("dateDebut") Date dateDebut,
@@ -110,14 +106,14 @@ public class EvenementController {
         evenements.setBareme(bareme);
         evenements.setCoefficientUser(coefficientUser);
         evenements.setCoefficientJury(coefficientJury);
-     //   evenements.setReference(reference);
+
         evenements.setImages(ConfigImg.save(file,file.getOriginalFilename()));
 
         return evenementsService.ModifierEvenements(evenements, id);
     }
 
     @DeleteMapping("/supprime/{id}")
-    @PostAuthorize("hasAuthority('ADMIN')")
+    @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object delete(@PathVariable Long id) {
 
         return evenementsService.supprimerEvenements(id);

@@ -20,7 +20,6 @@ public class Evaluation {
   private Long id;
 
   @NotBlank
-  @Size(max = 50)
   private Long note;
 
 
@@ -37,5 +36,6 @@ public class Evaluation {
   @JoinColumn(name = "id_projet")
   @ManyToOne
   private Projets projets;
+
 
 }

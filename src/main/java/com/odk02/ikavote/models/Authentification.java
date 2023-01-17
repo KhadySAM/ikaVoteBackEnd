@@ -24,5 +24,4 @@ public class Authentification {
   private String libelle;
 
 
-
 }

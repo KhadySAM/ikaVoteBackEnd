@@ -16,4 +16,5 @@ public interface ProjetsServices {
   Object afficherProjetsParId(Long id);
 
   List<Projets> afficherTousLesProjets();
+
 }

@@ -49,10 +49,9 @@ public class Evenements {
 
 
   //Les jointures
-
-  @JoinColumn(name = "id_Ath")
+  @JoinColumn(name = "id_Auth")
   @ManyToOne
-  private Evenements evenements;
+  private Authentification authentification;
 
 
 }
