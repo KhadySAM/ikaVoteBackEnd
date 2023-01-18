@@ -2,8 +2,8 @@ package com.odk02.ikavote.service.serviceImpl;
 
 import com.odk02.ikavote.models.Evenements;
 import com.odk02.ikavote.repository.EvenementsRepository;
+import com.odk02.ikavote.service.CodevotantService;
 import com.odk02.ikavote.service.EvenementsService;
-import com.odk02.ikavote.service.ReferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,14 +17,15 @@ public class EvenementsServiceImpl implements EvenementsService {
   private EvenementsRepository evenementsRepository;
 
   @Autowired
-  private ReferenceService referenceService;
+  private CodevotantService codevotantService;
   @Override
   public Object ajouterEvenements(Evenements evenements) {
 
     if(evenementsRepository.findByLibelle(evenements.getLibelle()) == null) {
 
 
-      referenceService.generCode(evenements.getNbreVotant(),evenementsRepository.save(evenements));
+      codevotantService.genererCode(evenements.getNbreVotant(),evenementsRepository.save(evenements));
+
 
       return "Evenements ajouter avec succès";
     }else {
@@ -62,6 +63,7 @@ public class EvenementsServiceImpl implements EvenementsService {
       eventsMod.setBareme(evenements.getBareme());
       eventsMod.setCoefficientJury(evenements.getCoefficientJury());
       eventsMod.setCoefficientUser(evenements.getCoefficientJury());
+
 
       eventsMod.setImages(evenements.getImages());
 

@@ -78,4 +78,22 @@ public class AuthenficationServiceImpl implements AuthentificationService {
   public List<Authentification> afficherTousLesTypesAuth() {
     return authentificationRepository.findAll();
   }
+
+ /* @Override
+  public Object generCode(Integer nbreVotant, Evenements evenements) {
+    List<Authentification> listauthentification=new ArrayList<>();
+    Random r=new Random();
+    for (int i=0;i<nbreVotant;i++){
+      String element="";
+      Authentification authentification=new Authentification();
+
+      for (int j=0;j<3;j++){
+        element+=r.nextInt(9);
+      }
+      authentification.setCode(Long.valueOf(element));
+      authentification.getEvenements().add(evenements);
+      listauthentification.add(authentificationRepository.save(authentification));
+    }
+    return listauthentification;
+  }*/
 }

@@ -8,14 +8,12 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-
-
 @Entity
-@Table(name = "reference")
+@Table(name = "codevotant")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Reference {
+public class Codevotant {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +27,6 @@ public class Reference {
   @JoinColumn(name = "id_events")
   @ManyToOne
   private Evenements evenements;
+
+
 }

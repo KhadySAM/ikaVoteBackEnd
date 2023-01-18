@@ -53,5 +53,9 @@ public class Evenements {
   @ManyToOne
   private Authentification authentification;
 
+  @JoinColumn(name = "id_pays")
+  @ManyToOne
+  private Pays pays;
+
 
 }

@@ -2,9 +2,11 @@ package com.odk02.ikavote.controllers;
 
 import com.odk02.ikavote.img.ConfigImg;
 import com.odk02.ikavote.models.Evenements;
-import com.odk02.ikavote.models.Pays;
+
+import com.odk02.ikavote.repository.AuthentificationRepository;
+import com.odk02.ikavote.repository.PaysRepository;
 import com.odk02.ikavote.service.EvenementsService;
-import com.odk02.ikavote.service.PaysService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -24,6 +26,11 @@ public class EvenementController {
     @Autowired
     EvenementsService evenementsService;
 
+    @Autowired
+    AuthentificationRepository authentificationRepository;
+
+    @Autowired
+    PaysRepository paysRepository;
 
     // Afficher tous les evenements
     @GetMapping("/getallpays")
@@ -53,6 +60,8 @@ public class EvenementController {
             @Param("coefficientUser") Long coefficientUser,
             @Param("coefficientJury") Long coefficientJury,
             @Param("nbreVotant") Integer nbreVotant,
+            @Param("idauth") Long idauth,
+            @Param("idpays") Long idpays,
             @Param("file") MultipartFile file) throws IOException {
 
 
@@ -64,6 +73,9 @@ public class EvenementController {
         evenements.setCoefficientUser(coefficientUser);
         evenements.setCoefficientJury(coefficientJury);
         evenements.setNbreVotant(nbreVotant);
+
+        evenements.setAuthentification(authentificationRepository.findById(idauth).get());
+        evenements.setPays(paysRepository.findById(idpays).get());
         evenements.setImages(ConfigImg.save(file,file.getOriginalFilename()));
 
         if (coefficientJury + coefficientUser != 100) {

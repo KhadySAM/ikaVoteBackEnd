@@ -1,6 +1,7 @@
 package com.odk02.ikavote.service;
 
 import com.odk02.ikavote.models.Authentification;
+import com.odk02.ikavote.models.Evenements;
 
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface AuthentificationService {
   Object afficherUnTypesAuth(Long id);
 
   List<Authentification> afficherTousLesTypesAuth();
+
+ // Object generCode(Integer nbreVotant, Evenements evenements);
 }

@@ -37,5 +37,9 @@ public class Evaluation {
   @ManyToOne
   private Projets projets;
 
+  @JoinColumn(name = "id_codevotant")
+  @ManyToOne
+  private Codevotant codevotant;
+
 
 }

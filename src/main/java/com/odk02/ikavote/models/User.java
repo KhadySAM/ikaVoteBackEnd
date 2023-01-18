@@ -33,7 +33,7 @@ public class User {
   @Size(max = 120)
   private String password;
 
-  @JoinColumn(name = "pays_id") //
+  @JoinColumn(name = "id_pays")
   @ManyToOne
   private Pays pays;
 

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 @Table(name = "authentification")
@@ -23,5 +24,10 @@ public class Authentification {
   @Size(max = 20)
   private String libelle;
 
+  private Long code;
+
+//  @JoinColumn(name = "id_events")
+//  @OneToMany
+//  private List<Evenements> evenements;
 
 }
