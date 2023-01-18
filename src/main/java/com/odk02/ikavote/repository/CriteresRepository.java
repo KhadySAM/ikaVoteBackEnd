@@ -9,4 +9,6 @@ public interface CriteresRepository extends JpaRepository<Criteres, Long> {
 
   public Criteres findByTitre(String titre);
 
+ // public Criteres findByIdCritere(Long id);
+
 }

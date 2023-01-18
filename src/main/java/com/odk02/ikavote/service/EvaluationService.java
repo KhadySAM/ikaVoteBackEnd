@@ -1,11 +1,10 @@
 package com.odk02.ikavote.service;
 
-import com.odk02.ikavote.models.Criteres;
-import com.odk02.ikavote.models.Evaluation;
-import com.odk02.ikavote.models.Projets;
-import com.odk02.ikavote.models.User;
+import com.odk02.ikavote.models.*;
 
 public interface EvaluationService {
 
-  Object noterUnprojetParCriter(Evaluation evaluation);
+  Object noterUnprojetParCriter(Long id_projets, Long id_criteres, Long id_reference);
+
+  Object noterUnprojetParCriter(Long id_projets, Long id_criteres, Reference reference);
 }

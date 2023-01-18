@@ -13,7 +13,7 @@ import java.util.Optional;
 public class CriteresServiceImpl implements CriteresService {
 
   @Autowired
-  private CriteresRepository criteresRepository;
+   CriteresRepository criteresRepository;
   @Override
   public Object ajouterCriteres(Criteres criteres) {
     if(criteresRepository.findByTitre(criteres.getTitre()) == null) {
