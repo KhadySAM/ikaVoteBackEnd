@@ -5,6 +5,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,11 +34,12 @@ public class User {
   @Size(max = 120)
   private String password;
 
+//  @ManyToMany(mappedBy = "JURY")
+//  private List<Evenements> evenements;
+
   @JoinColumn(name = "id_pays")
   @ManyToOne
   private Pays pays;
-
-
 
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(  name = "user_roles",

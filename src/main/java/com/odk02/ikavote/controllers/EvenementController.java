@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,11 +79,12 @@ public class EvenementController {
         evenements.setPays(paysRepository.findById(idpays).get());
         evenements.setImages(ConfigImg.save(file,file.getOriginalFilename()));
 
-        if (coefficientJury + coefficientUser != 100) {
+        if (evenements.getDateFin().before(evenements.getDateDebut())) {
+          return "La date de début ne peut pas être après la date de fin";
+        } else if (coefficientJury + coefficientUser != 100) {
           return "Attention la somme des coefficients user et jury est toujours egale à 100% ";
         }
         else {
-
           return evenementsService.ajouterEvenements(evenements);
         }
 
@@ -121,7 +123,14 @@ public class EvenementController {
 
         evenements.setImages(ConfigImg.save(file,file.getOriginalFilename()));
 
-        return evenementsService.ModifierEvenements(evenements, id);
+      if (evenements.getDateFin().before(evenements.getDateDebut())) {
+        return "La date de début ne peut pas être après la date de fin";
+      } else if (coefficientJury + coefficientUser != 100) {
+        return "Attention la somme des coefficients user et jury est toujours egale à 100% ";
+      }
+      else {
+        return evenementsService.ajouterEvenements(evenements);
+      }
     }
 
     @DeleteMapping("/supprime/{id}")
