@@ -4,9 +4,7 @@ import com.odk02.ikavote.models.*;
 
 public interface EvaluationService {
 
- // Object noterUnprojetParCriter(Long id_projets, Long id_criteres, Long id_reference);
+  Object addEvaluationJury(Long id_user, Long id_critere, Long id_projet, Long note);
 
-//  Evaluation noterUnprojetParCriter(Evaluation evaluation);
-
-  Object noterUnProjet(Codevotant codevotant);
+  Object addEvaluation(Long id_codevotant, Long id_critere, Long id_projet, Long note);
 }

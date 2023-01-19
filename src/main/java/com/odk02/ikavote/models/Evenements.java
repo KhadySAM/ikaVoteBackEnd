@@ -8,6 +8,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -56,6 +58,7 @@ public class Evenements {
   @JoinColumn(name = "id_pays")
   @ManyToOne
   private Pays pays;
+
 
 
 }
