@@ -1,11 +1,13 @@
 package com.odk02.ikavote.controllers;
 
 
+import com.odk02.ikavote.img.ConfigImg;
 import com.odk02.ikavote.messages.request.LoginRequest;
 import com.odk02.ikavote.messages.request.SignupRequest;
 import com.odk02.ikavote.messages.response.JwtResponse;
 import com.odk02.ikavote.messages.response.MessageResponse;
 import com.odk02.ikavote.models.ERole;
+import com.odk02.ikavote.models.Evenements;
 import com.odk02.ikavote.models.Role;
 import com.odk02.ikavote.models.User;
 import com.odk02.ikavote.repository.RoleRepository;
@@ -13,6 +15,7 @@ import com.odk02.ikavote.repository.UserRepository;
 import com.odk02.ikavote.security.jwt.JwtUtils;
 import com.odk02.ikavote.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,14 +24,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -69,6 +74,82 @@ public class AuthController {
   }
 
   @PostMapping("/signup")
+  @PostAuthorize("hasAuthority('SUPERADMIN')")
+  public ResponseEntity<?> registerUser(@Valid
+
+    @Param("username") String username,
+    @Param("email") String  email,
+    @Param("password") String password,
+    SignupRequest signUpRequest,
+    @Param("file") MultipartFile file) throws Exception {
+
+
+
+    if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+      return ResponseEntity
+        .badRequest()
+        .body(new MessageResponse("Erreur: le nom d'utilisateur est déjà pris!"));
+    }
+
+    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+      return ResponseEntity
+        .badRequest()
+        .body(new MessageResponse("Erreur: l'e-mail est déjà utilisé!"));
+    }
+
+    // Créer un nouveau compte d'utilisateur
+    User user = new User();
+    user.setUsername(username);
+    user.setEmail(email);
+    user.setPassword(password);
+    user.setImages(ConfigImg.save(file,file.getOriginalFilename()));
+
+
+
+    Set<String> strRoles = signUpRequest.getRole();
+    Set<Role> roles = new HashSet<>();
+
+    if (strRoles == null) {
+      Role userRole = roleRepository.findByName(ERole.USER)
+        .orElseThrow(() -> new RuntimeException("Erreur: Role non trouvé"));
+      roles.add(userRole);
+    } else {
+      strRoles.forEach(role -> {
+        switch (role) {
+          case "admin":
+            Role adminRole = roleRepository.findByName(ERole.ADMIN)
+              .orElseThrow(() -> new RuntimeException("Erreur: Role non trouvé"));
+            roles.add(adminRole);
+
+            break;
+          case "jury":
+            Role modRole = roleRepository.findByName(ERole.JURY)
+              .orElseThrow(() -> new RuntimeException("Erreur: Role non trouvé"));
+            roles.add(modRole);
+
+            break;
+
+          case "superadmin":
+            Role superadminRole = roleRepository.findByName(ERole.SUPERADMIN)
+              .orElseThrow(() -> new RuntimeException("Erreur: Role non trouvé"));
+            roles.add(superadminRole);
+            break;
+
+          default:
+            Role userRole = roleRepository.findByName(ERole.USER)
+              .orElseThrow(() -> new RuntimeException("Erreur: Role non trouvé"));
+            roles.add(userRole);
+        }
+      });
+    }
+
+    user.setRoles(roles);
+    userRepository.save(user);
+
+    return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès!"));
+  }
+
+  /* @PostMapping("/signup")
   @PostAuthorize("hasAuthority('SUPERADMIN')")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
     if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -129,7 +210,7 @@ public class AuthController {
     userRepository.save(user);
 
     return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès!"));
-  }
+  }*/
 
   public ResponseEntity<?> registerDefaultUser(@Valid @RequestBody SignupRequest signUpRequest) {
     if (userRepository.existsByUsername(signUpRequest.getUsername())) {
@@ -147,6 +228,7 @@ public class AuthController {
     // Créer un nouveau compte d'utilisateur
     User user = new User(signUpRequest.getUsername(),
       signUpRequest.getEmail(),
+      signUpRequest.getImages(),
       encoder.encode(signUpRequest.getPassword()));
 
     Set<String> strRoles = signUpRequest.getRole();
@@ -191,5 +273,13 @@ public class AuthController {
 
     return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès!"));
   }
+
+  @GetMapping("/getalluser")
+  //@PostAuthorize("hasAuthority('SUPERADMIN')")
+  public List<User> getAll() {
+
+    return userRepository.findAll();
+  }
+
 
 }

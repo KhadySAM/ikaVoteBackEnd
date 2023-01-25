@@ -11,6 +11,10 @@ import com.odk02.ikavote.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -30,6 +34,8 @@ public class EvaluationServiceImpl implements EvaluationService {
 
   @Autowired
   private UserRepository userRepository;
+
+
 
 
   public Object addEvaluation(Long id_codevotant, Long id_critere, Long id_projet, Long note) {
@@ -54,7 +60,8 @@ public class EvaluationServiceImpl implements EvaluationService {
     return "Note envoyer";
   }
 
-   public Object addEvaluationJury(Long id_critere, Long id_projet, Long id_user, Long note) {
+
+  public Object addEvaluationJury(Long id_critere, Long id_projet, Long id_user, Long note) {
 
     // Vérifie si un code votant a déjà évalué ce projet
     if (evaluationRepository.existsByUserAndProjetsAndCriteres(userRepository.findById(id_user).get(),
@@ -75,5 +82,40 @@ public class EvaluationServiceImpl implements EvaluationService {
     }
     return "Note envoyer";
   }
+
+
+  @Override
+  public Map<Long, Double> calculMoyenneGeneralProject() {
+    List<Evaluation> evaluations = evaluationRepository.findAll();
+    Map<Long, List<Long>> projectNote = new HashMap<>();
+
+
+    // Grouper les notes de chaque projet ensemble
+    for (Evaluation evaluation : evaluations) {
+      Long projectId = evaluation.getProjets().getId();
+      Long note = evaluation.getNote();
+      if ( !projectNote.containsKey(projectId)) {
+        projectNote.put(projectId, new ArrayList<>());
+      }
+      projectNote.get(projectId).add(note);
+    }
+
+    // Calculer la moyenne de chaque groupe de notes de projet
+    Map<Long, Double> moyProject = new HashMap<>();
+    for (Map.Entry<Long, List<Long>> entry : projectNote.entrySet()) {
+      Long projectId = entry.getKey();
+      List<Long> notes = entry.getValue();
+      Double moyenne = notes.stream().mapToDouble(val -> val).average().orElse(0.0);
+      moyProject.put(projectId, moyenne);
+    }
+
+    return moyProject;
+  }
+
+
+
+
+
 }
+
 

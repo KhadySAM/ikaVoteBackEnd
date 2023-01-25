@@ -25,6 +25,7 @@ public class Evaluation {
 
   //Les jointures
 
+
   @JoinColumn(name = "id_user")
   @ManyToOne
   private User user;

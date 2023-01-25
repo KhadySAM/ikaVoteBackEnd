@@ -1,27 +1,34 @@
 package com.odk02.ikavote.messages.request;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
-
+@Setter
+@Getter
 public class SignupRequest {
-  @NotBlank
+ // @NotBlank
   @Size(min = 3, max = 20)
   private String username;
 
-  @NotBlank
+  //@NotBlank
   @Size(max = 50)
   @Email
   private String email;
 
   private Set<String> role;
 
-  @NotBlank
+ // @NotBlank
   @Size(min = 6, max = 40)
   private String password;
 
-  public String getUsername() {
+  //@NotBlank
+  private String images;
+
+ /* public String getUsername() {
     return username;
   }
 
@@ -45,11 +52,19 @@ public class SignupRequest {
     this.password = password;
   }
 
+  public String getImages() {
+    return images;
+  }
+
+  public void setImages(String images) {
+    this.images = images;
+  }
+
   public Set<String> getRole() {
     return this.role;
   }
 
   public void setRole(Set<String> role) {
     this.role = role;
-  }
+  }*/
 }

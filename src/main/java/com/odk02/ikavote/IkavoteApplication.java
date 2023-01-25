@@ -38,9 +38,10 @@ public class IkavoteApplication {
       Set<String> roles = new HashSet<>();
       roles.add("superadmin");
       SignupRequest defaultuser = new SignupRequest();
-      defaultuser.setUsername("khadija");
-      defaultuser.setEmail("khadysamsup@gmail.com");
-      defaultuser.setPassword("1234567");
+      defaultuser.setUsername("Sekou");
+      defaultuser.setEmail("dsekou166@gmail.com");
+      defaultuser.setImages("fffffffff");
+      defaultuser.setPassword("sekoudiakite25");
       defaultuser.setRole(roles);
       authController.registerDefaultUser(defaultuser);
 

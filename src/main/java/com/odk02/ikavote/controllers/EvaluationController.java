@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/admin")
 public class EvaluationController {
@@ -45,4 +47,15 @@ public class EvaluationController {
       }
       return "Votre note superieur a la bareme";
     }
+
+  @GetMapping("/moyenne")
+  public Map<Long, Double> getProjectAverages() {
+    return evaluationService.calculMoyenneGeneralProject();
+  }
+
+ 
+
+
+
+
 }

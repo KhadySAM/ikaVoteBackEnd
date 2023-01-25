@@ -34,6 +34,10 @@ public class User {
   @Size(max = 120)
   private String password;
 
+
+  @Size(max = 120)
+  private String images;
+
 //  @ManyToMany(mappedBy = "JURY")
 //  private List<Evenements> evenements;
 
@@ -51,10 +55,11 @@ public class User {
   public User() {
   }
 
-  public User(String username, String email, String password) {
+  public User(String username, String email, String password, String images) {
     this.username = username;
     this.email = email;
     this.password = password;
+    this.images = images;
   }
 
   public Long getId() {
@@ -87,6 +92,10 @@ public class User {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public void setImages(String images) {
+    this.images = images;
   }
 
   public Set<Role> getRoles() {
