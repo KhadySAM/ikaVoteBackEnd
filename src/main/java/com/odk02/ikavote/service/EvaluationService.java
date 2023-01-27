@@ -11,11 +11,14 @@ public interface EvaluationService {
 
   Object addEvaluation(Long id_codevotant, Long id_critere, Long id_projet, Long note);
 
+ //  Map<Long, Double> calculMoyenneGeneralProject(Long id_user, Long id_critere, Long id_projet, Long note );
+
   Map<Long, Double> calculMoyenneGeneralProject();
 
+  Map<Long, Double> calculMoyenneGeneralProjectJury();
+
+  Map<Long, Double> calculMoyenneGeneralProjectParticipant();
 
 
-
-
-
+ // double getAverageNoteByCodevotant(Long codevotant);
 }

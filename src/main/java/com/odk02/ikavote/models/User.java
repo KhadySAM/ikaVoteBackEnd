@@ -1,5 +1,10 @@
 package com.odk02.ikavote.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +20,10 @@ import java.util.Set;
     @UniqueConstraint(columnNames = "username"),
     @UniqueConstraint(columnNames = "email")
   })
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +44,6 @@ public class User {
   private String password;
 
 
-  @Size(max = 120)
-  private String images;
 
 //  @ManyToMany(mappedBy = "JURY")
 //  private List<Evenements> evenements;
@@ -51,7 +58,7 @@ public class User {
     inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
 
-
+/*
   public User() {
   }
 
@@ -59,7 +66,10 @@ public class User {
     this.username = username;
     this.email = email;
     this.password = password;
-    this.images = images;
+  }
+
+  public User(String username, String email, String encode) {
+
   }
 
   public Long getId() {
@@ -94,9 +104,6 @@ public class User {
     this.password = password;
   }
 
-  public void setImages(String images) {
-    this.images = images;
-  }
 
   public Set<Role> getRoles() {
     return roles;
@@ -104,5 +111,5 @@ public class User {
 
   public void setRoles(Set<Role> roles) {
     this.roles = roles;
-  }
+  }*/
 }

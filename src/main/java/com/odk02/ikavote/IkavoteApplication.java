@@ -2,6 +2,7 @@ package com.odk02.ikavote;
 
 import com.odk02.ikavote.controllers.AuthController;
 import com.odk02.ikavote.messages.request.SignupRequest;
+import com.odk02.ikavote.messages.request.SignupRequestDefault;
 import com.odk02.ikavote.models.ERole;
 import com.odk02.ikavote.models.Role;
 import com.odk02.ikavote.repository.RoleRepository;
@@ -38,10 +39,12 @@ public class IkavoteApplication {
       Set<String> roles = new HashSet<>();
       roles.add("superadmin");
       SignupRequest defaultuser = new SignupRequest();
-      defaultuser.setUsername("Sekou");
-      defaultuser.setEmail("dsekou166@gmail.com");
-      defaultuser.setImages("fffffffff");
-      defaultuser.setPassword("sekoudiakite25");
+
+    //  SignupRequestDefault defaultuser = new SignupRequestDefault();
+      defaultuser.setUsername("Khadija");
+      defaultuser.setEmail("kadisamgmail.com");
+     // defaultuser.setImages("fffffffff");
+      defaultuser.setPassword("1234567");
       defaultuser.setRole(roles);
       authController.registerDefaultUser(defaultuser);
 

@@ -4,6 +4,7 @@ package com.odk02.ikavote.controllers;
 import com.odk02.ikavote.img.ConfigImg;
 import com.odk02.ikavote.messages.request.LoginRequest;
 import com.odk02.ikavote.messages.request.SignupRequest;
+import com.odk02.ikavote.messages.request.SignupRequestDefault;
 import com.odk02.ikavote.messages.response.JwtResponse;
 import com.odk02.ikavote.messages.response.MessageResponse;
 import com.odk02.ikavote.models.ERole;
@@ -75,13 +76,7 @@ public class AuthController {
 
   @PostMapping("/signup")
   @PostAuthorize("hasAuthority('SUPERADMIN')")
-  public ResponseEntity<?> registerUser(@Valid
-
-    @Param("username") String username,
-    @Param("email") String  email,
-    @Param("password") String password,
-    SignupRequest signUpRequest,
-    @Param("file") MultipartFile file) throws Exception {
+  public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 
 
 
@@ -97,13 +92,9 @@ public class AuthController {
         .body(new MessageResponse("Erreur: l'e-mail est déjà utilisé!"));
     }
 
-    // Créer un nouveau compte d'utilisateur
-    User user = new User();
-    user.setUsername(username);
-    user.setEmail(email);
-    user.setPassword(password);
-    user.setImages(ConfigImg.save(file,file.getOriginalFilename()));
-
+    User user = new User(null,signUpRequest.getUsername(),
+      signUpRequest.getEmail(),
+      encoder.encode(signUpRequest.getPassword()),null,new HashSet<>());
 
 
     Set<String> strRoles = signUpRequest.getRole();
@@ -149,69 +140,6 @@ public class AuthController {
     return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès!"));
   }
 
-  /* @PostMapping("/signup")
-  @PostAuthorize("hasAuthority('SUPERADMIN')")
-  public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-    if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-      return ResponseEntity
-          .badRequest()
-          .body(new MessageResponse("Erreur: le nom d'utilisateur est déjà pris!"));
-    }
-
-    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-      return ResponseEntity
-          .badRequest()
-          .body(new MessageResponse("Erreur: l'e-mail est déjà utilisé!"));
-    }
-
-    // Créer un nouveau compte d'utilisateur
-    User user = new User(signUpRequest.getUsername(),
-               signUpRequest.getEmail(),
-               encoder.encode(signUpRequest.getPassword()));
-
-    Set<String> strRoles = signUpRequest.getRole();
-    Set<Role> roles = new HashSet<>();
-
-    if (strRoles == null) {
-      Role userRole = roleRepository.findByName(ERole.USER)
-          .orElseThrow(() -> new RuntimeException("Erreur: Role non trouvé"));
-      roles.add(userRole);
-    } else {
-      strRoles.forEach(role -> {
-        switch (role) {
-        case "admin":
-          Role adminRole = roleRepository.findByName(ERole.ADMIN)
-              .orElseThrow(() -> new RuntimeException("Erreur: Role non trouvé"));
-          roles.add(adminRole);
-
-          break;
-        case "jury":
-          Role modRole = roleRepository.findByName(ERole.JURY)
-              .orElseThrow(() -> new RuntimeException("Erreur: Role non trouvé"));
-          roles.add(modRole);
-
-          break;
-
-          case "superadmin":
-            Role superadminRole = roleRepository.findByName(ERole.SUPERADMIN)
-              .orElseThrow(() -> new RuntimeException("Erreur: Role non trouvé"));
-            roles.add(superadminRole);
-            break;
-
-        default:
-          Role userRole = roleRepository.findByName(ERole.USER)
-              .orElseThrow(() -> new RuntimeException("Erreur: Role non trouvé"));
-          roles.add(userRole);
-        }
-      });
-    }
-
-    user.setRoles(roles);
-    userRepository.save(user);
-
-    return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès!"));
-  }*/
-
   public ResponseEntity<?> registerDefaultUser(@Valid @RequestBody SignupRequest signUpRequest) {
     if (userRepository.existsByUsername(signUpRequest.getUsername())) {
       return ResponseEntity
@@ -226,10 +154,9 @@ public class AuthController {
     }
 
     // Créer un nouveau compte d'utilisateur
-    User user = new User(signUpRequest.getUsername(),
+    User user = new User(null,signUpRequest.getUsername(),
       signUpRequest.getEmail(),
-      signUpRequest.getImages(),
-      encoder.encode(signUpRequest.getPassword()));
+      encoder.encode(signUpRequest.getPassword()),null, new HashSet<>());
 
     Set<String> strRoles = signUpRequest.getRole();
     Set<Role> roles = new HashSet<>();

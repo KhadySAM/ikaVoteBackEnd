@@ -16,6 +16,7 @@ public class EvenementsServiceImpl implements EvenementsService {
   @Autowired
   private EvenementsRepository evenementsRepository;
 
+
   @Autowired
   private CodevotantService codevotantService;
   @Override
@@ -92,4 +93,6 @@ public class EvenementsServiceImpl implements EvenementsService {
 
     return evenementsRepository.findAll();
   }
+
+
 }

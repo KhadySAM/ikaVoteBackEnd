@@ -4,6 +4,7 @@ import com.odk02.ikavote.models.Evaluation;
 import com.odk02.ikavote.repository.CriteresRepository;
 import com.odk02.ikavote.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,7 +54,16 @@ public class EvaluationController {
     return evaluationService.calculMoyenneGeneralProject();
   }
 
- 
+  @GetMapping("/moyennejury")
+  public Map<Long, Double> getProjectMoyJury() {
+    return evaluationService.calculMoyenneGeneralProjectJury();
+  }
+
+  @GetMapping("/moyenneparti")
+  public Map<Long, Double> getProjectMoyParticipant() {
+    return evaluationService.calculMoyenneGeneralProjectParticipant();
+  }
+
 
 
 
