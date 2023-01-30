@@ -1,9 +1,7 @@
 package com.odk02.ikavote.models;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,7 +9,8 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "pays")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Pays {

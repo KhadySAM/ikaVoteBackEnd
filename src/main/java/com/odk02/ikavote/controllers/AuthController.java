@@ -1,14 +1,14 @@
 package com.odk02.ikavote.controllers;
 
 
-import com.odk02.ikavote.img.ConfigImg;
+
 import com.odk02.ikavote.messages.request.LoginRequest;
 import com.odk02.ikavote.messages.request.SignupRequest;
-import com.odk02.ikavote.messages.request.SignupRequestDefault;
+
 import com.odk02.ikavote.messages.response.JwtResponse;
 import com.odk02.ikavote.messages.response.MessageResponse;
 import com.odk02.ikavote.models.ERole;
-import com.odk02.ikavote.models.Evenements;
+
 import com.odk02.ikavote.models.Role;
 import com.odk02.ikavote.models.User;
 import com.odk02.ikavote.repository.RoleRepository;
@@ -16,7 +16,7 @@ import com.odk02.ikavote.repository.UserRepository;
 import com.odk02.ikavote.security.jwt.JwtUtils;
 import com.odk02.ikavote.security.services.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,10 +25,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
 
 import javax.validation.Valid;
-import java.util.Date;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -75,7 +75,7 @@ public class AuthController {
   }
 
   @PostMapping("/signup")
-  @PostAuthorize("hasAuthority('SUPERADMIN')")
+
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 
 
@@ -92,9 +92,11 @@ public class AuthController {
         .body(new MessageResponse("Erreur: l'e-mail est déjà utilisé!"));
     }
 
-    User user = new User(null,signUpRequest.getUsername(),
+
+
+    User user = new User(null, signUpRequest.getUsername(),
       signUpRequest.getEmail(),
-      encoder.encode(signUpRequest.getPassword()),null,new HashSet<>());
+      encoder.encode(signUpRequest.getPassword()), signUpRequest.getPays(), new HashSet<>());
 
 
     Set<String> strRoles = signUpRequest.getRole();
@@ -154,6 +156,8 @@ public class AuthController {
     }
 
     // Créer un nouveau compte d'utilisateur
+
+
     User user = new User(null,signUpRequest.getUsername(),
       signUpRequest.getEmail(),
       encoder.encode(signUpRequest.getPassword()),null, new HashSet<>());

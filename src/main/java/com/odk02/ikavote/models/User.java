@@ -50,7 +50,7 @@ public class User {
 
   @JoinColumn(name = "id_pays")
   @ManyToOne
-  private Pays pays;
+  private  Pays pays;
 
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(  name = "user_roles",
@@ -58,7 +58,11 @@ public class User {
     inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
 
+
+
 /*
+public User(Long id, String username, String email, String encode, Long pays, HashSet<Role> roles) {
+  }
   public User() {
   }
 
