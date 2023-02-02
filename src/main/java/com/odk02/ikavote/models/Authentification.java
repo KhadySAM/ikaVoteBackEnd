@@ -24,7 +24,7 @@ public class Authentification {
   @Size(max = 20)
   private String libelle;
 
-  private Long code;
+ // private Long code;
 
 //  @JoinColumn(name = "id_events")
 //  @OneToMany

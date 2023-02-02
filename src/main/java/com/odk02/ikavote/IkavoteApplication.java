@@ -43,7 +43,7 @@ public class IkavoteApplication {
     //  SignupRequestDefault defaultuser = new SignupRequestDefault();
       defaultuser.setUsername("Khadija");
       defaultuser.setEmail("kadisamgmail.com");
-     // defaultuser.setImages("fffffffff");
+      //defaultuser.setPays("MALI");
       defaultuser.setPassword("1234567");
       defaultuser.setRole(roles);
       authController.registerDefaultUser(defaultuser);

@@ -1,6 +1,7 @@
 package com.odk02.ikavote.controllers;
 
 import com.odk02.ikavote.models.Authentification;
+import com.odk02.ikavote.repository.AuthentificationRepository;
 import com.odk02.ikavote.service.AuthentificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -8,17 +9,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api/superadmin")
+
+@CrossOrigin(value = "http://localhost:4200",maxAge = 3600,allowCredentials = "true")
 @RestController
+@RequestMapping("/api/auth")
 public class TypeAuthController {
 
   @Autowired
   AuthentificationService authentificationService;
 
+  @Autowired
+  AuthentificationRepository authentificationRepository;
+
 
   // Afficher tous les types d'authentification enregistrer
   @PostMapping("/ajouttypesauth")
-  @PostAuthorize("hasAuthority('SUPERADMIN')")
+ // @PostAuthorize("hasAuthority('SUPERADMIN')")
   public Object  add(@RequestBody Authentification authentification) {
 
     return authentificationService.ajouterTypesAuth(authentification);
@@ -28,10 +34,10 @@ public class TypeAuthController {
 
   // Afficher tous les types d'authentification enregistrer
   @GetMapping("/getalltype")
-  @PostAuthorize("hasAuthority('SUPERADMIN')")
+  //@PostAuthorize("hasAuthority('SUPERADMIN')")
   public List <Authentification> getAll() {
 
-    return authentificationService.afficherTousLesTypesAuth();
+    return authentificationRepository.findAll();
   }
 
   // Afficher un types d'authentification par id
