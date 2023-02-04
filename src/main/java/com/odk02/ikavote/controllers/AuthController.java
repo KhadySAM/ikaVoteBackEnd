@@ -33,7 +33,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@CrossOrigin(value = "http://localhost:4200",maxAge = 3600,allowCredentials = "true")
+/*@CrossOrigin(value = "http://localhost:4200",maxAge = 3600,allowCredentials = "true")*/
+@CrossOrigin(origins ={ "http://localhost:4200/", "http://localhost:8100/" }, maxAge = 3600, allowCredentials="true")
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
