@@ -35,7 +35,7 @@ public class PaysServiceImpl implements PaysService {
   public Object supprimerPays(Long id) {
 
     Optional<Pays> pays = paysRepository.findById(id);
-    if (pays.isPresent()) {
+    if (!pays.isPresent()) {
       return "Ce pays n'existe pas !";
     }
     else {

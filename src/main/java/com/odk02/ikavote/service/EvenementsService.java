@@ -16,4 +16,6 @@ public interface EvenementsService {
   Object afficherEvenementsParId(Long id);
 
   List<Evenements> afficherTousLesEvenements();
+
+//  Evenements getEventWithProjects(Long eventsid);
 }

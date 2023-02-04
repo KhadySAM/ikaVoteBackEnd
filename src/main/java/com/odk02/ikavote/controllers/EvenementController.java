@@ -5,10 +5,12 @@ import com.odk02.ikavote.models.Evenements;
 
 import com.odk02.ikavote.repository.AuthentificationRepository;
 import com.odk02.ikavote.repository.PaysRepository;
+import com.odk02.ikavote.repository.ProjetsRepository;
 import com.odk02.ikavote.service.EvenementsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,12 +22,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+@CrossOrigin(value = "http://localhost:4200",maxAge = 3600,allowCredentials = "true")
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/auth")
 public class EvenementController {
 
     @Autowired
     EvenementsService evenementsService;
+
 
     @Autowired
     AuthentificationRepository authentificationRepository;
@@ -34,16 +38,25 @@ public class EvenementController {
     PaysRepository paysRepository;
 
     // Afficher tous les evenements
-    @GetMapping("/getallpays")
-    @PostAuthorize("hasAuthority('SUPERADMIN')")
+    @GetMapping("/getallevents")
+   // @PostAuthorize("hasAuthority('SUPERADMIN')")
     public List<Evenements> getAll() {
 
         return evenementsService.afficherTousLesEvenements();
     }
 
-    // Afficher un pays par id
-    @GetMapping("/getonepays/{id}")
-    @PostAuthorize("hasAuthority('SUPERADMIN')")
+
+ /* @GetMapping("/getallevents/{id}")
+
+  public List<Evenements> getEventsId(@PathVariable Long id) {
+
+    return projetsRepository.findEvenementByProjets(id);
+  }*/
+
+
+    // Afficher un event par id
+    @GetMapping("/getonevents/{id}")
+   // @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object afficherUnEventParId(@PathVariable Long id) {
 
         return evenementsService.afficherEvenementsParId(id);
@@ -51,8 +64,8 @@ public class EvenementController {
 
 
     // Ajouter un pays
-    @PostMapping("/ajoutEvents")
-    @PostAuthorize("hasAuthority('SUPERADMIN')")
+    @PostMapping("/ajoutevents")
+  //  @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object addEvents(
             @Param("libelle") String libelle,
             @Param("dateDebut") Date dateDebut,
@@ -91,8 +104,8 @@ public class EvenementController {
     }
 
 
-    @PutMapping("/modifier/{id}")
-    @PostAuthorize("hasAuthority('SUPERADMIN')")
+    @PutMapping("/modifierevent/{id}")
+  //  @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object updatePays(@PathVariable Long id,
                              @Param("libelle") String libelle,
                              @Param("dateDebut") Date dateDebut,
@@ -133,8 +146,8 @@ public class EvenementController {
       }
     }
 
-    @DeleteMapping("/supprime/{id}")
-    @PostAuthorize("hasAuthority('SUPERADMIN')")
+    @DeleteMapping("/supprimevent/{id}")
+  //  @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object delete(@PathVariable Long id) {
 
         return evenementsService.supprimerEvenements(id);

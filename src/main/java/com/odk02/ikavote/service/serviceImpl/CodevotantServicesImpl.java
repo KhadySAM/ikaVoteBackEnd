@@ -40,14 +40,5 @@ public class CodevotantServicesImpl implements CodevotantService {
     return listcodevotant;
   }
 
-  /*@Override
-  public Object faireUneEvaluation(Evaluation evaluation, Codevotant codevotant) {
 
-    if (codevotantRepository.findByCode(codevotant.getCode()) != null) {
-
-
-    }
-
-    return null;
-  }*/
 }

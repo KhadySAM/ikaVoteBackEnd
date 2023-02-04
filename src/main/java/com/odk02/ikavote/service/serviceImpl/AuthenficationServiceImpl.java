@@ -34,7 +34,7 @@ public class AuthenficationServiceImpl implements AuthentificationService {
   public Object supprimerTypesAuth(Long id) {
 
     Optional<Authentification> authentification = authentificationRepository.findById(id);
-    if (authentification.isPresent()) {
+    if (!authentification.isPresent()) {
       return "Ce type d'authentification n'existe pas !";
     }
     else {

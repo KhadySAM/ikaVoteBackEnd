@@ -39,9 +39,18 @@ public class User {
   @Email
   private String email;
 
+  public User(String username, String email, String password, Set<Role> roles) {
+    this.username = username;
+    this.email = email;
+    this.password = password;
+    this.roles = roles;
+  }
+
   @NotBlank
   @Size(max = 120)
   private String password;
+
+
 
 
 
@@ -57,6 +66,7 @@ public class User {
     joinColumns = @JoinColumn(name = "user_id"),
     inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
+
 
 
 

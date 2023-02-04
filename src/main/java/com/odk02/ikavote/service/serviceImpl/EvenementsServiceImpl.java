@@ -4,6 +4,7 @@ import com.odk02.ikavote.models.Evenements;
 import com.odk02.ikavote.repository.EvenementsRepository;
 import com.odk02.ikavote.service.CodevotantService;
 import com.odk02.ikavote.service.EvenementsService;
+import org.apache.velocity.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

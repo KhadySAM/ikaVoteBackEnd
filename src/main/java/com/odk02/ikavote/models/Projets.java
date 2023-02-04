@@ -1,5 +1,6 @@
 package com.odk02.ikavote.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,4 +38,6 @@ public class Projets {
   @JoinColumn(name = "id_events")
   @ManyToOne
   private Evenements evenements;
+
+
 }

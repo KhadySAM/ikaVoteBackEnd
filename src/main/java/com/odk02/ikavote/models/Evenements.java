@@ -60,9 +60,9 @@ public class Evenements {
   private Pays pays;
 
 
-
-//  @ManyToMany
-//  private List<User> users;
+  @JoinColumn(name = "id_projets")
+  @OneToMany
+  private List<Projets> projets;
 
 
 

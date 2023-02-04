@@ -1,12 +1,17 @@
 package com.odk02.ikavote.controllers;
 
+import com.odk02.ikavote.img.ConfigImg;
 import com.odk02.ikavote.models.Authentification;
+import com.odk02.ikavote.models.Pays;
 import com.odk02.ikavote.repository.AuthentificationRepository;
 import com.odk02.ikavote.service.AuthentificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 
@@ -22,10 +27,13 @@ public class TypeAuthController {
   AuthentificationRepository authentificationRepository;
 
 
-  // Afficher tous les types d'authentification enregistrer
   @PostMapping("/ajouttypesauth")
- // @PostAuthorize("hasAuthority('SUPERADMIN')")
-  public Object  add(@RequestBody Authentification authentification) {
+  // @PostAuthorize("hasAuthority('SUPERADMIN')")
+  public Object  add(@Param("libelle") String libelle) {
+
+    Authentification authentification = new Authentification();
+
+    authentification.setLibelle(libelle);
 
     return authentificationService.ajouterTypesAuth(authentification);
   }

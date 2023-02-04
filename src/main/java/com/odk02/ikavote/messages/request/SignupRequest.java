@@ -28,9 +28,9 @@ public class SignupRequest {
   private Set<String> role;
 
 
-  @NotBlank
+  /*@NotBlank
   @Size(max = 50)
-  private Pays pays;
+  private Pays pays;*/
 
   @NotBlank
   @Size(min = 6, max = 40)
