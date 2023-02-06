@@ -18,6 +18,9 @@ public class ProjetsServiceImp implements ProjetsServices {
   @Autowired
   private ProjetsRepository projetsRepository;
 
+  @Autowired
+  private EvenementsRepository evenementsRepository;
+
   @Override
   public Object ajouterProjets(Projets projets) {
 
@@ -82,4 +85,19 @@ public class ProjetsServiceImp implements ProjetsServices {
 
     return projetsRepository.findAll();
   }
+
+  @Override
+  public List<Projets> getProjectsWithEvent(Long idevents) {
+    Optional<Evenements> evenements = evenementsRepository.findById(idevents);
+    return projetsRepository.findProjetsByEvenements(evenements.get());
+  }
+
+  @Override
+  public Projets getProjetsById(Long id) {
+    return projetsRepository.findById(id).orElse(null);
+  }
+
+
+
+
 }

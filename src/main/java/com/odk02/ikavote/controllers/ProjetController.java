@@ -14,14 +14,26 @@ import java.io.IOException;
 
 import java.util.List;
 
+@CrossOrigin(origins ={ "http://localhost:4200/", "http://localhost:8100/" }, maxAge = 3600, allowCredentials="true")
 @RestController
-@RequestMapping("/api/superadmin")
+@RequestMapping("/api/auth")
 public class ProjetController {
 
     @Autowired
     ProjetsServices projetsServices;
 
+
+  @GetMapping("/projets/{id}")
+  public Projets getProjetsById(@PathVariable Long id) {
+    return projetsServices.getProjetsById(id);
+  }
+
   // Ajouter un projet
+  @GetMapping("/projetbyetevents/{id}")
+  public List<Projets> getEventsByprojectId(@PathVariable Long id) {
+    return projetsServices.getProjectsWithEvent(id);
+  }
+
   @PostMapping("/ajoutprojet")
   @PostAuthorize("hasAuthority('SUPERADMIN')")
   public Object addProjets(

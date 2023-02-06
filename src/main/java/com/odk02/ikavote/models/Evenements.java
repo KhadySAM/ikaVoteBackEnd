@@ -1,5 +1,6 @@
 package com.odk02.ikavote.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -60,8 +61,8 @@ public class Evenements {
   private Pays pays;
 
 
-  @JoinColumn(name = "id_projets")
-  @OneToMany
+  @OneToMany(mappedBy = "evenements")
+  @JsonIgnore
   private List<Projets> projets;
 
 

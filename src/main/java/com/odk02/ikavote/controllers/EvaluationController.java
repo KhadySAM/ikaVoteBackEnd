@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/auth")
 public class EvaluationController {
 
 
@@ -49,20 +49,20 @@ public class EvaluationController {
       return "Votre note superieur a la bareme";
     }
 
-  @GetMapping("/moyenne")
-  public Map<Long, Double> getProjectAverages() {
-    return evaluationService.calculMoyenneGeneralProject();
-  }
+//  @GetMapping("/moyenne")
+//  public Map<Long, Double> getProjectAverages() {
+//    return evaluationService.calculMoyenneGeneralProject();
+//  }
 
   @GetMapping("/moyennejury")
   public Map<Long, Double> getProjectMoyJury() {
     return evaluationService.calculMoyenneGeneralProjectJury();
   }
 
-  @GetMapping("/moyenneparti")
+ /* @GetMapping("/moyenneparti")
   public Map<Long, Double> getProjectMoyParticipant() {
     return evaluationService.calculMoyenneGeneralProjectParticipant();
-  }
+  }*/
 
 
 

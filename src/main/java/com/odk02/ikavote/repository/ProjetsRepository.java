@@ -14,5 +14,6 @@ public interface ProjetsRepository extends JpaRepository  <Projets, Long> {
 
     public Projets findByLibelle(String libelle);
 
-    //List <Evenements>  findEvenementByProjets(Long id);
+  List<Projets> findProjetsByEvenements(Evenements evenements);
+
 }

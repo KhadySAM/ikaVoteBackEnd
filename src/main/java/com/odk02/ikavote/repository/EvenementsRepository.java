@@ -12,7 +12,7 @@ public interface EvenementsRepository extends JpaRepository <Evenements , Long> 
 
     public Evenements findByLibelle(String libelle);
 
+  List<Evenements> findEvenementByProjets(Projets projets);
 
-  //List<Projets> findAllProjectsByEvenementstId(Long idEvent);
 
 }

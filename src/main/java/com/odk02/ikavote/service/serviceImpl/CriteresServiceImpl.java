@@ -1,7 +1,10 @@
 package com.odk02.ikavote.service.serviceImpl;
 
 import com.odk02.ikavote.models.Criteres;
+import com.odk02.ikavote.models.Evenements;
+import com.odk02.ikavote.models.Projets;
 import com.odk02.ikavote.repository.CriteresRepository;
+import com.odk02.ikavote.repository.EvenementsRepository;
 import com.odk02.ikavote.service.CriteresService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +17,9 @@ public class CriteresServiceImpl implements CriteresService {
 
   @Autowired
    CriteresRepository criteresRepository;
+
+  @Autowired
+  EvenementsRepository evenementsRepository;
   @Override
   public Object ajouterCriteres(Criteres criteres) {
     if(criteresRepository.findByTitre(criteres.getTitre()) == null) {
@@ -50,6 +56,7 @@ public class CriteresServiceImpl implements CriteresService {
       Criteres criteresMod = criteresRepository.findById(id).get();
       criteresMod.setTitre(criteres.getTitre());
       criteresMod.setContenu(criteres.getContenu());
+      criteresMod.setNote(criteres.getNote());
       criteresRepository.saveAndFlush(criteresMod);
 
       return "Critere modifier avec succès";
@@ -73,4 +80,11 @@ public class CriteresServiceImpl implements CriteresService {
   public List<Criteres> afficherTousLesCriteres() {
     return criteresRepository.findAll();
   }
+
+  @Override
+  public List<Criteres> getCritersWithEvent(Long idevents) {
+    Optional<Evenements> evenements = evenementsRepository.findById(idevents);
+    return criteresRepository.findCritersByEvenements(evenements.get());
+  }
+
 }

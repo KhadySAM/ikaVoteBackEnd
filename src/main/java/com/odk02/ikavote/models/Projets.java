@@ -35,9 +35,9 @@ public class Projets {
 
   //Les jointures
 
-  @JoinColumn(name = "id_events")
-  @ManyToOne
+  @ManyToOne()
   private Evenements evenements;
+
 
 
 }

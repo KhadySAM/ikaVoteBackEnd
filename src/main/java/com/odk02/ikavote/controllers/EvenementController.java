@@ -39,6 +39,11 @@ public class EvenementController {
     @Autowired
     PaysRepository paysRepository;
 
+  @GetMapping("/events/{id}")
+  public Evenements getEventById(@PathVariable Long id) {
+    return evenementsService.getEvenementsById(id);
+  }
+
     // Afficher tous les evenements
     @GetMapping("/getallevents")
    // @PostAuthorize("hasAuthority('SUPERADMIN')")
@@ -48,12 +53,12 @@ public class EvenementController {
     }
 
 
- /* @GetMapping("/getallevents/{id}")
+  @GetMapping("/eventsbyprojet/{id}")
 
-  public List<Evenements> getEventsId(@PathVariable Long id) {
+  public List<Evenements> getEventsByprojectId(@PathVariable Long id) {
 
-    return projetsRepository.findEvenementByProjets(id);
-  }*/
+    return evenementsService.getEventWithProjects(id);
+  }
 
 
     // Afficher un event par id

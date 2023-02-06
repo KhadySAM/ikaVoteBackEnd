@@ -1,7 +1,9 @@
 package com.odk02.ikavote.service.serviceImpl;
 
 import com.odk02.ikavote.models.Evenements;
+import com.odk02.ikavote.models.Projets;
 import com.odk02.ikavote.repository.EvenementsRepository;
+import com.odk02.ikavote.repository.ProjetsRepository;
 import com.odk02.ikavote.service.CodevotantService;
 import com.odk02.ikavote.service.EvenementsService;
 import org.apache.velocity.exception.ResourceNotFoundException;
@@ -16,6 +18,8 @@ public class EvenementsServiceImpl implements EvenementsService {
 
   @Autowired
   private EvenementsRepository evenementsRepository;
+  @Autowired
+  private ProjetsRepository projetsRepository;
 
 
   @Autowired
@@ -93,6 +97,18 @@ public class EvenementsServiceImpl implements EvenementsService {
   public List<Evenements> afficherTousLesEvenements() {
 
     return evenementsRepository.findAll();
+  }
+
+  @Override
+  public List<Evenements> getEventWithProjects(Long idprojet) {
+    Optional<Projets> projets = projetsRepository.findById(idprojet);
+    return evenementsRepository.findEvenementByProjets(projets.get());
+  }
+
+  @Override
+  public Evenements getEvenementsById(Long id) {
+    return evenementsRepository.findById(id).orElse(null);
+
   }
 
 
