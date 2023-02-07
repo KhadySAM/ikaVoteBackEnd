@@ -29,7 +29,7 @@ public class ProjetController {
   }
 
   // Ajouter un projet
-  @GetMapping("/projetbyetevents/{id}")
+  @GetMapping("/projetbyevents/{id}")
   public List<Projets> getEventsByprojectId(@PathVariable Long id) {
     return projetsServices.getProjectsWithEvent(id);
   }

@@ -4,11 +4,12 @@ import com.odk02.ikavote.models.Evaluation;
 import com.odk02.ikavote.repository.CriteresRepository;
 import com.odk02.ikavote.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+
+@CrossOrigin(origins ={ "http://localhost:4200/", "http://localhost:8100/" }, maxAge = 3600, allowCredentials="true")
 
 @RestController
 @RequestMapping("/api/auth")
@@ -37,7 +38,7 @@ public class EvaluationController {
     }
 
     @PostMapping("/noterprojetjury")
-    @PostAuthorize("hasAuthority('JURY')")
+   // @PostAuthorize("hasAuthority('JURY')")
     Object addEvaluationJury(@RequestBody Evaluation evaluation) {
       if (criteresRepository.findById(evaluation.getCriteres().getId()).get().getEvenements().getBareme() >= evaluation.getNote()) {
         return evaluationService.addEvaluationJury(
@@ -49,20 +50,21 @@ public class EvaluationController {
       return "Votre note superieur a la bareme";
     }
 
-//  @GetMapping("/moyenne")
-//  public Map<Long, Double> getProjectAverages() {
-//    return evaluationService.calculMoyenneGeneralProject();
-//  }
+
 
   @GetMapping("/moyennejury")
-  public Map<Long, Double> getProjectMoyJury() {
-    return evaluationService.calculMoyenneGeneralProjectJury();
+  public Map<Long, Double> gettMoyJuryParProjet() {
+
+      return evaluationService.calculMoyenneGeneralProjectJury();
   }
 
- /* @GetMapping("/moyenneparti")
-  public Map<Long, Double> getProjectMoyParticipant() {
+  @GetMapping("/moyennevotant")
+  public Map<Long, Double> gettMoyCodevotantarProjet() {
+
     return evaluationService.calculMoyenneGeneralProjectParticipant();
-  }*/
+  }
+
+
 
 
 

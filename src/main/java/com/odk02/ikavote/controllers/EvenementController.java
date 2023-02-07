@@ -10,19 +10,16 @@ import com.odk02.ikavote.service.EvenementsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-/*@CrossOrigin(value = "http://localhost:4200",maxAge = 3600,allowCredentials = "true")*/
+
 @CrossOrigin(origins ={ "http://localhost:4200/", "http://localhost:8100/" }, maxAge = 3600, allowCredentials="true")
 
 @RestController
@@ -46,7 +43,6 @@ public class EvenementController {
 
     // Afficher tous les evenements
     @GetMapping("/getallevents")
-   // @PostAuthorize("hasAuthority('SUPERADMIN')")
     public List<Evenements> getAll() {
 
         return evenementsService.afficherTousLesEvenements();
@@ -63,7 +59,6 @@ public class EvenementController {
 
     // Afficher un event par id
     @GetMapping("/getonevents/{id}")
-   // @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object afficherUnEventParId(@PathVariable Long id) {
 
         return evenementsService.afficherEvenementsParId(id);
@@ -72,8 +67,7 @@ public class EvenementController {
 
     // Ajouter un pays
     @PostMapping("/ajoutevents")
-  //  @PostAuthorize("hasAuthority('SUPERADMIN')")
-    public Object addEvents(
+      public Object addEvents(
             @Param("libelle") String libelle,
             @Param("dateDebut") Date dateDebut,
             @Param("dateFin") Date dateFin,
@@ -112,7 +106,6 @@ public class EvenementController {
 
 
     @PutMapping("/modifierevent/{id}")
-  //  @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object updatePays(@PathVariable Long id,
                              @Param("libelle") String libelle,
                              @Param("dateDebut") Date dateDebut,
@@ -154,7 +147,6 @@ public class EvenementController {
     }
 
     @DeleteMapping("/supprimevent/{id}")
-  //  @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object delete(@PathVariable Long id) {
 
         return evenementsService.supprimerEvenements(id);

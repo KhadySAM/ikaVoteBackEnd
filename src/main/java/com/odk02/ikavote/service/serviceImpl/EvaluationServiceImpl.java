@@ -29,8 +29,6 @@ public class EvaluationServiceImpl implements EvaluationService {
   @Autowired
   private CriteresRepository criteresRepository;
 
-/*  @Autowired
-  private EvenementsRepository evenementsRepository;*/
 
   @Autowired
   private ProjetsRepository projetsRepository;
@@ -88,48 +86,9 @@ public class EvaluationServiceImpl implements EvaluationService {
     return "Note envoyer";
   }
 
- /* public double getAverageNoteByCodevotant(Long codevotant) {
-    List<Evaluation> evaluations = evaluationRepository.findByCodevotant(codevotant);
-    return evaluations.stream().mapToLong(Evaluation::getNote).average().orElse(0);
-  }*/
 
 
-/*  @Override
-  public Map<Long, Double> calculMoyenneGeneralProject() {
-    List<Evaluation> evaluations = evaluationRepository.findEvaluationByUser(;
-    Map<Long, List<Long>> projectNote = new HashMap<>();
-
-    // Grouper les notes de chaque projet ensemble
-    for (Evaluation evaluation : evaluations) {
-      Long projectId = evaluation.getProjets().getId();
-      Long note = evaluation.getNote();
-      Long userId = evaluation.getUser().getId();
-      Long codevotant = evaluation.getCodevotant().getId();
-      if (userId != null && codevotant == null ) {
-        if ( !projectNote.containsKey(projectId)) {
-          projectNote.put(projectId, new ArrayList<>());
-        }
-        projectNote.get(projectId).add(note);
-      }
-
-
-
-    }
-    // Calculer la moyenne de chaque groupe de notes de projet
-    Map<Long, Double> moyProject = new HashMap<>();
-    for (Map.Entry<Long, List<Long>> entry : projectNote.entrySet()) {
-      Long projectId = entry.getKey();
-      List<Long> notes = entry.getValue();
-      Double moyenne = notes.stream().mapToDouble(val -> val).average().orElse(0.0);
-      moyProject.put(projectId, moyenne);
-    }
-
-    return moyProject;
-
-  }*/
-
-
-
+/*
  @Override
   public Map<Long, Double> calculMoyenneGeneralProject() {
     List<Evaluation> evaluations = evaluationRepository.findAll();
@@ -156,13 +115,13 @@ public class EvaluationServiceImpl implements EvaluationService {
     }
 
     return moyProject;
-  }
+  }*/
 
   @Override
   public Map<Long, Double> calculMoyenneGeneralProjectJury() {
 
 
-    List<Evaluation> evaluations = evaluationRepository.findByCodevotant(null);
+    List<Evaluation> evaluations = evaluationRepository.findByUser(null);
     Map<Long, List<Long>> projectNote = new HashMap<>();
 
 
@@ -190,7 +149,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 
   @Override
   public Map<Long, Double> calculMoyenneGeneralProjectParticipant() {
-    List<Evaluation> evaluations = evaluationRepository.findByUser(null);
+    List<Evaluation> evaluations = evaluationRepository.findByCodevotant(null);
     Map<Long, List<Long>> projectNote = new HashMap<>();
 
 
