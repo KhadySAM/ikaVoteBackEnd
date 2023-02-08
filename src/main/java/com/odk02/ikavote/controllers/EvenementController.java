@@ -64,8 +64,45 @@ public class EvenementController {
         return evenementsService.afficherEvenementsParId(id);
     }
 
+  // Ajouter un pays
+  @PostMapping("/ajoutevents/{nompays}/{libelleauth}")
+  public Object addEvents(@PathVariable("nompays") String nompays, @PathVariable("libelleauth") String libelleauth,
+    @Param("libelle") String libelle,
+    @Param("dateDebut") Date dateDebut,
+    @Param("dateFin") Date dateFin,
+    @Param("bareme") Long bareme,
+    @Param("coefficientUser") Long coefficientUser,
+    @Param("coefficientJury") Long coefficientJury,
+    @Param("nbreVotant") Integer nbreVotant,
+    @Param("file") MultipartFile file) throws IOException {
 
-    // Ajouter un pays
+
+    Evenements evenements = new Evenements();
+    evenements.setLibelle(libelle);
+    evenements.setDateDebut(dateDebut);
+    evenements.setDateFin(dateFin);
+    evenements.setBareme(bareme);
+    evenements.setCoefficientUser(coefficientUser);
+    evenements.setCoefficientJury(coefficientJury);
+    evenements.setNbreVotant(nbreVotant);
+
+    evenements.setAuthentification(authentificationRepository.findByLibelle(libelleauth));
+    evenements.setPays(paysRepository.findByNom(nompays));
+    evenements.setImages(ConfigImg.save(file,file.getOriginalFilename()));
+
+    if (evenements.getDateFin().before(evenements.getDateDebut())) {
+      return "La date de début ne peut pas être après la date de fin";
+    } else if (coefficientJury + coefficientUser != 100) {
+      return "Attention la somme des coefficients user et jury est toujours egale à 100% ";
+    }
+    else {
+      return evenementsService.ajouterEvenements(evenements);
+    }
+
+  }
+
+
+    /*// Ajouter un pays
     @PostMapping("/ajoutevents")
       public Object addEvents(
             @Param("libelle") String libelle,
@@ -102,7 +139,7 @@ public class EvenementController {
           return evenementsService.ajouterEvenements(evenements);
         }
 
-    }
+    }*/
 
 
     @PutMapping("/modifierevent/{id}")

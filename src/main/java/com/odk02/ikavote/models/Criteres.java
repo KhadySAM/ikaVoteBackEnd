@@ -27,8 +27,7 @@ public class Criteres {
   @Size(max =50)
   private  String contenu;
 
-  @NotBlank
-  @Size(max =50)
+
   private  Long note;
 
 

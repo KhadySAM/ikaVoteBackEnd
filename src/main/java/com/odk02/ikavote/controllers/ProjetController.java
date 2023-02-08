@@ -3,6 +3,7 @@ package com.odk02.ikavote.controllers;
 import com.odk02.ikavote.img.ConfigImg;
 import com.odk02.ikavote.models.Evenements;
 import com.odk02.ikavote.models.Projets;
+import com.odk02.ikavote.repository.EvenementsRepository;
 import com.odk02.ikavote.service.ProjetsServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -22,6 +23,9 @@ public class ProjetController {
     @Autowired
     ProjetsServices projetsServices;
 
+  @Autowired
+  EvenementsRepository evenementsRepository;
+
 
   @GetMapping("/projets/{id}")
   public Projets getProjetsById(@PathVariable Long id) {
@@ -29,23 +33,41 @@ public class ProjetController {
   }
 
   // Ajouter un projet
-  @GetMapping("/projetbyevents/{id}")
-  public List<Projets> getEventsByprojectId(@PathVariable Long id) {
-    return projetsServices.getProjectsWithEvent(id);
+  @GetMapping("/projetbyevents/{idEvents}")
+  public List<Projets> getEventsByprojectId(@PathVariable Long idEvents) {
+
+    return projetsServices.getProjectsWithEvent(idEvents);
   }
 
-  @PostMapping("/ajoutprojet")
+/*  @PostMapping("/ajoutprojet/{nomevent}")
   @PostAuthorize("hasAuthority('SUPERADMIN')")
-  public Object addProjets(
+  public Object addProjets( @PathVariable ("nomevent") String nomevent,
     @Param("libelle") String libelle,
     @Param("description") String description,
-    @Param("id_events") Evenements id_events,
     @Param("file") MultipartFile file) throws IOException {
 
     Projets projets = new Projets();
     projets.setLibelle(libelle);
     projets.setDescription(description);
-    projets.setEvenements(id_events);
+    projets.setEvenements(evenementsRepository.findByLibelle(nomevent));
+    projets.setImages(ConfigImg.save(file,file.getOriginalFilename()));
+
+
+    return projetsServices.ajouterProjets(projets);
+
+  }*/
+
+  @PostMapping("/ajoutprojet/{idEvents}")
+ // @PostAuthorize("hasAuthority('SUPERADMIN')")
+  public Object addProjets( @PathVariable ("idEvents") Long idEvents,
+                            @Param("libelle") String libelle,
+                            @Param("description") String description,
+                            @Param("file") MultipartFile file) throws IOException {
+
+    Projets projets = new Projets();
+    projets.setLibelle(libelle);
+    projets.setDescription(description);
+    projets.setEvenements(evenementsRepository.findById(idEvents).get());
     projets.setImages(ConfigImg.save(file,file.getOriginalFilename()));
 
 
