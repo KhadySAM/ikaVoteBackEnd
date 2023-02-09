@@ -19,7 +19,7 @@ public class Evaluation {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @NotBlank
+
   private Long note;
 
 

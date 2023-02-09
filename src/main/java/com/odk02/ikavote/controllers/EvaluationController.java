@@ -1,6 +1,7 @@
 package com.odk02.ikavote.controllers;
 
 import com.odk02.ikavote.models.Evaluation;
+import com.odk02.ikavote.models.Projets;
 import com.odk02.ikavote.repository.CriteresRepository;
 import com.odk02.ikavote.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,14 @@ public class EvaluationController {
   CriteresRepository criteresRepository;
 
     @PostMapping("/noterprojet")
-    @PostAuthorize("hasAuthority('SUPERADMIN')")
+  //  @PostAuthorize("hasAuthority('SUPERADMIN')")
     Object addEvaluation(@RequestBody Evaluation evaluation) {
 
+
+
       if (criteresRepository.findById(evaluation.getCriteres().getId()).get().getEvenements().getBareme() >= evaluation.getNote()) {
-        return evaluationService.addEvaluation(evaluation.getCodevotant().getId(),
+        return evaluationService.addEvaluation(
+          evaluation.getCodevotant().getId(),
           evaluation.getCriteres().getId(),
           evaluation.getProjets().getId(),
           evaluation.getNote());
@@ -46,6 +50,7 @@ public class EvaluationController {
           evaluation.getProjets().getId(),
           evaluation.getUser().getId(),
           evaluation.getNote());
+
       }
       return "Votre note superieur a la bareme";
     }
@@ -56,6 +61,7 @@ public class EvaluationController {
   public Map<Long, Double> gettMoyJuryParProjet() {
 
       return evaluationService.calculMoyenneGeneralProjectJury();
+
   }
 
   @GetMapping("/moyennevotant")
@@ -63,6 +69,10 @@ public class EvaluationController {
 
     return evaluationService.calculMoyenneGeneralProjectParticipant();
   }
+
+
+
+
 
 
 

@@ -102,46 +102,6 @@ public class EvenementController {
   }
 
 
-    /*// Ajouter un pays
-    @PostMapping("/ajoutevents")
-      public Object addEvents(
-            @Param("libelle") String libelle,
-            @Param("dateDebut") Date dateDebut,
-            @Param("dateFin") Date dateFin,
-            @Param("bareme") Long bareme,
-            @Param("coefficientUser") Long coefficientUser,
-            @Param("coefficientJury") Long coefficientJury,
-            @Param("nbreVotant") Integer nbreVotant,
-            @Param("idauth") Long idauth,
-            @Param("idpays") Long idpays,
-            @Param("file") MultipartFile file) throws IOException {
-
-
-        Evenements evenements = new Evenements();
-        evenements.setLibelle(libelle);
-        evenements.setDateDebut(dateDebut);
-        evenements.setDateFin(dateFin);
-        evenements.setBareme(bareme);
-        evenements.setCoefficientUser(coefficientUser);
-        evenements.setCoefficientJury(coefficientJury);
-        evenements.setNbreVotant(nbreVotant);
-
-        evenements.setAuthentification(authentificationRepository.findById(idauth).get());
-        evenements.setPays(paysRepository.findById(idpays).get());
-        evenements.setImages(ConfigImg.save(file,file.getOriginalFilename()));
-
-        if (evenements.getDateFin().before(evenements.getDateDebut())) {
-          return "La date de début ne peut pas être après la date de fin";
-        } else if (coefficientJury + coefficientUser != 100) {
-          return "Attention la somme des coefficients user et jury est toujours egale à 100% ";
-        }
-        else {
-          return evenementsService.ajouterEvenements(evenements);
-        }
-
-    }*/
-
-
     @PutMapping("/modifierevent/{id}")
     public Object updatePays(@PathVariable Long id,
                              @Param("libelle") String libelle,
@@ -188,4 +148,10 @@ public class EvenementController {
 
         return evenementsService.supprimerEvenements(id);
     }
+
+ /* @GetMapping("/moyenneTotaleDeChaqueProjet/{idEvenement}")
+  public double calculerMoyenneTotaleDeChaqueProjetPourUnEvenementDonne(@PathVariable Long idEvenement) {
+
+    return evenementsService.calculateAverageTotalForProjects(idEvenement).size();
+  }*/
 }

@@ -38,7 +38,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 
 
 
-
+/*
   public Object addEvaluation(Long id_codevotant, Long id_critere, Long id_projet, Long note) {
 
     // Vérifie si un code votant a déjà évalué ce projet
@@ -59,12 +59,12 @@ public class EvaluationServiceImpl implements EvaluationService {
       evaluationRepository.save(evaluation);
     }
     return "Note envoyer";
-  }
+  }*/
 
 
 
 
-  public Object addEvaluationJury(Long id_critere, Long id_projet, Long id_user, Long note) {
+  /*public Object addEvaluationJury(Long id_critere, Long id_projet, Long id_user, Long note) {
 
     // Vérifie si un code votant a déjà évalué ce projet
     if (evaluationRepository.existsByUserAndProjetsAndCriteres(userRepository.findById(id_user).get(),
@@ -85,6 +85,63 @@ public class EvaluationServiceImpl implements EvaluationService {
     }
     return "Note envoyer";
   }
+*/
+
+  public Object addEvaluation(Long id_codevotant, Long id_critere, Long id_projet, Long note) {
+
+    Criteres criteres = criteresRepository.findById(id_critere).get();
+    Projets projets = projetsRepository.findById(id_projet).get();
+    Codevotant codevotant = codevotantRepository.findById(id_codevotant).get();
+    // Vérifie si un user a déjà évalué ce projet
+    if (evaluationRepository.existsByCodevotantAndProjetsAndCriteres(codevotant,projets,criteres)){
+      return "Vous avez déjà évalué ce projet sur ce critere";
+    } else {
+
+      Evaluation evaluation = new Evaluation();
+
+      if(projets.getMoyParcitipant()==null){
+        projets.setMoyParcitipant(0L);
+      }
+
+      evaluation.setCriteres(criteres);
+      projets.setMoyParcitipant(projets.getMoyParcitipant()+note);
+      evaluation.setProjets(projets);
+      evaluation.setCodevotant(codevotant);
+      evaluation.setNote(note);
+
+      evaluationRepository.save(evaluation);
+    }
+    return "Note envoyer";
+  }
+
+  // ======================================================================
+
+  public Object addEvaluationJury(Long id_critere, Long id_projet, Long id_user, Long note) {
+      Criteres criteres = criteresRepository.findById(id_critere).get();
+      Projets projets = projetsRepository.findById(id_projet).get();
+      User user = userRepository.findById(id_user).get();
+    // Vérifie si un user a déjà évalué ce projet
+    if (evaluationRepository.existsByUserAndProjetsAndCriteres(user,projets,criteres)){
+      return "Vous avez déjà évalué ce projet sur ce critere";
+    } else {
+
+      Evaluation evaluation = new Evaluation();
+
+      if(projets.getMoyJury()==null){
+        projets.setMoyJury(0L);
+      }
+      evaluation.setCriteres(criteres);
+      projets.setMoyJury(projets.getMoyJury()+note);
+      evaluation.setProjets(projets);
+      evaluation.setUser(user);
+      evaluation.setNote(note);
+
+      evaluationRepository.save(evaluation);
+    }
+    return "Note envoyer";
+  }
+
+
 
 
 
@@ -124,6 +181,8 @@ public class EvaluationServiceImpl implements EvaluationService {
     List<Evaluation> evaluations = evaluationRepository.findByUser(null);
     Map<Long, List<Long>> projectNote = new HashMap<>();
 
+  //  Projets projets = new Projets();
+
 
     // Grouper les notes de chaque projet ensemble
     for (Evaluation evaluation : evaluations) {
@@ -142,11 +201,45 @@ public class EvaluationServiceImpl implements EvaluationService {
       List<Long> notes = entry.getValue();
       Double moyenne = notes.stream().mapToDouble(val -> val).average().orElse(0.0);
       moyProject.put(projectId, moyenne);
+   //   projets.setMoyJury(moyenne);
+
     }
 
     return moyProject;
   }
 
+
+  /* @Override
+  public Map<Long, Double> calculMoyenneGeneralProjectJury() {
+
+
+    List<Evaluation> evaluations = evaluationRepository.findByUser(null);
+    Map<Long, List<Long>> projectNote = new HashMap<>();
+
+
+    // Grouper les notes de chaque projet ensemble
+    for (Evaluation evaluation : evaluations) {
+      Long projectId = evaluation.getProjets().getId();
+      Long note = evaluation.getNote();
+      if ( !projectNote.containsKey(projectId)) {
+        projectNote.put(projectId, new ArrayList<>());
+      }
+      projectNote.get(projectId).add(note);
+    }
+
+    // Calculer la moyenne de chaque groupe de notes de projet
+    Map<Long, Double> moyProject = new HashMap<>();
+    for (Map.Entry<Long, List<Long>> entry : projectNote.entrySet()) {
+      Long projectId = entry.getKey();
+      List<Long> notes = entry.getValue();
+      Double moyenne = notes.stream().mapToDouble(val -> val).average().orElse(0.0);
+      moyProject.put(projectId, moyenne);
+
+    }
+
+    return moyProject;
+  }
+*/
   @Override
   public Map<Long, Double> calculMoyenneGeneralProjectParticipant() {
     List<Evaluation> evaluations = evaluationRepository.findByCodevotant(null);

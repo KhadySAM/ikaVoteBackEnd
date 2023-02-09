@@ -1,6 +1,5 @@
 package com.odk02.ikavote.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,6 +28,12 @@ public class Projets {
   @NotBlank
   @Size(max =50)
   private  String description;
+
+  private  Long moyJury;
+
+  private  Long moyParcitipant;
+
+  private  Long moyTotal;
 
   @NotBlank
   private String images;

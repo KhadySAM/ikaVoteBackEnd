@@ -27,7 +27,7 @@ public class Criteres {
   @Size(max =50)
   private  String contenu;
 
-
+// a enlever
   private  Long note;
 
 

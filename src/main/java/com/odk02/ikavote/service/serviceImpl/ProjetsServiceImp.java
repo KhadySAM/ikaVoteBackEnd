@@ -94,10 +94,8 @@ public class ProjetsServiceImp implements ProjetsServices {
 
   @Override
   public Projets getProjetsById(Long id) {
-    return projetsRepository.findById(id).orElse(null);
+    return null;
   }
-
-
 
 
 }

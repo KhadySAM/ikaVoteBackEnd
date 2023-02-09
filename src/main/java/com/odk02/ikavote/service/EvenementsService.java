@@ -4,6 +4,7 @@ import com.odk02.ikavote.models.Evenements;
 
 
 import java.util.List;
+import java.util.Map;
 
 public interface EvenementsService {
 
@@ -20,4 +21,8 @@ public interface EvenementsService {
   List<Evenements> getEventWithProjects(Long idprojet);
 
   Evenements getEvenementsById(Long id);
+
+ // Map<Long, Double> calculateAverageTotalForProjects(Long eventId);
+
+  double calculerMoyenneTotaleDeTousLesProjets();
 }
