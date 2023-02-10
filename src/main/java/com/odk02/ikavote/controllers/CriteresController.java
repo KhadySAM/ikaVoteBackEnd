@@ -33,6 +33,7 @@ public class CriteresController {
 
   @GetMapping("/criteresbyevents/{id}")
   public List<Criteres> getCriteresByEventsId(@PathVariable Long id) {
+
     return criteresService.getCritersWithEvent(id);
   }
 
