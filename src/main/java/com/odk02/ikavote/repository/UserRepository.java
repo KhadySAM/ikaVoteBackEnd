@@ -20,6 +20,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
   Boolean existsByEmail(String email);
 
 
+
+
   @Query(value = "SELECT users.* FROM user_roles,users,roles,pays WHERE users.id=user_roles.user_id AND users.id_pays=pays.id AND roles.id=user_roles.role_id AND roles.id=:id",nativeQuery = true)
   List<User> findByAdminRole(@Param("id")Long id);
 

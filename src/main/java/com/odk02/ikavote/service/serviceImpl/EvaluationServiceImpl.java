@@ -117,9 +117,16 @@ public class EvaluationServiceImpl implements EvaluationService {
   // ======================================================================
 
   public Object addEvaluationJury(Long id_critere, Long id_projet, Long id_user, Long note) {
+
       Criteres criteres = criteresRepository.findById(id_critere).get();
       Projets projets = projetsRepository.findById(id_projet).get();
       User user = userRepository.findById(id_user).get();
+
+
+
+
+
+
     // Vérifie si un user a déjà évalué ce projet
     if (evaluationRepository.existsByUserAndProjetsAndCriteres(user,projets,criteres)){
       return "Vous avez déjà évalué ce projet sur ce critere";
@@ -131,12 +138,13 @@ public class EvaluationServiceImpl implements EvaluationService {
         projets.setMoyJury(0L);
       }
       evaluation.setCriteres(criteres);
-      projets.setMoyJury(projets.getMoyJury()+note);
+     // projets.setMoyJury(projets.getMoyJury()+note);
+      projets.setMoyJury((projets.getMoyJury()+note)/nbreJury());
       evaluation.setProjets(projets);
       evaluation.setUser(user);
       evaluation.setNote(note);
-
       evaluationRepository.save(evaluation);
+
     }
     return "Note envoyer";
   }
@@ -266,6 +274,11 @@ public class EvaluationServiceImpl implements EvaluationService {
     }
 
     return moyProject;
+  }
+
+  @Override
+  public Long nbreJury() {
+    return evaluationRepository.nbreJury();
   }
 
 
