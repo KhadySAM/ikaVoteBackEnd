@@ -29,11 +29,11 @@ public class Projets {
   @Size(max =50)
   private  String description;
 
-  private  Long moyJury;
+  private  Double moyJury;
 
-  private  Long moyParcitipant;
+  private  Double moyParcitipant;
 
-  private  Long moyTotal;
+  private  Double moyTotal;
 
   @NotBlank
   private String images;

@@ -42,10 +42,10 @@ public class Evenements {
   private Long bareme;
 
   @NotBlank
-  private Long coefficientUser;
+  private Double coefficientUser;
 
   @NotBlank
-  private Long coefficientJury;
+  private Double coefficientJury;
 
   @NotBlank
   private Integer nbreVotant;

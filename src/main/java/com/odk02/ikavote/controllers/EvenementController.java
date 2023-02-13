@@ -71,8 +71,8 @@ public class EvenementController {
     @Param("dateDebut") Date dateDebut,
     @Param("dateFin") Date dateFin,
     @Param("bareme") Long bareme,
-    @Param("coefficientUser") Long coefficientUser,
-    @Param("coefficientJury") Long coefficientJury,
+    @Param("coefficientUser") Double coefficientUser,
+    @Param("coefficientJury") Double coefficientJury,
     @Param("nbreVotant") Integer nbreVotant,
     @Param("file") MultipartFile file) throws IOException {
 
@@ -108,8 +108,8 @@ public class EvenementController {
                              @Param("dateDebut") Date dateDebut,
                              @Param("dateFin") Date dateFin,
                              @Param("bareme") Long bareme,
-                             @Param("coefficientUser") Long coefficientUser,
-                             @Param("coefficientJury") Long coefficientJury,
+                             @Param("coefficientUser") Double coefficientUser,
+                             @Param("coefficientJury") Double coefficientJury,
                              @Param("nbreVotant") Integer nbreVotant,
                              @Param("file") MultipartFile file) throws IOException {
 

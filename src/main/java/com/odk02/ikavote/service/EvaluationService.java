@@ -13,11 +13,17 @@ public interface EvaluationService {
 
  // Map<Long, Double> calculMoyenneGeneralProject();
 
-  Map<Long, Double> calculMoyenneGeneralProjectJury();
+  Map<Long, Double> calculMoyenneGeneralProjectVotant();
 
-  Map<Long, Double> calculMoyenneGeneralProjectParticipant();
+  Map<Long, Double> calculMoyenneGeneralProjectJury();
 
 
   Long nbreJury();
+
+ // Map<Long, Double> calculMoyenneGeneralProjectJurykura(Long idEvents);
+
+  Map<Long, Double> calculMoyenneGeneralProjectVotantKura(Long eventId);
+
+  Map<Long, Double> calculMoyenneGeneralProjectJuryKura(Long eventId);
 
 }

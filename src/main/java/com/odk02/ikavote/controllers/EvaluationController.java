@@ -1,6 +1,7 @@
 package com.odk02.ikavote.controllers;
 
 import com.odk02.ikavote.models.Evaluation;
+import com.odk02.ikavote.models.Evenements;
 import com.odk02.ikavote.models.Projets;
 import com.odk02.ikavote.repository.CriteresRepository;
 import com.odk02.ikavote.service.EvaluationService;
@@ -57,17 +58,30 @@ public class EvaluationController {
 
 
 
-  @GetMapping("/moyennejury")
-  public Map<Long, Double> gettMoyJuryParProjet() {
+  @GetMapping("/Moyennevotant")
+  public Map<Long, Double> gettMoyVotantParProjet() {
 
-      return evaluationService.calculMoyenneGeneralProjectJury();
+      return evaluationService.calculMoyenneGeneralProjectVotant();
 
   }
 
-  @GetMapping("/moyennevotant")
-  public Map<Long, Double> gettMoyCodevotantarProjet() {
+  @GetMapping("/Moyennejury")
+  public Map<Long, Double> gettMoyJuryParProjet() {
 
-    return evaluationService.calculMoyenneGeneralProjectParticipant();
+    return evaluationService.calculMoyenneGeneralProjectJury();
+  }
+
+  @GetMapping("/moyenneJuryParEvent/{eventId}")
+  public Map<Long, Double> getMoyJuryParProjetKura(@PathVariable Long eventId) {
+
+    return evaluationService.calculMoyenneGeneralProjectJuryKura(eventId);
+
+  }
+
+  @GetMapping("/moyenneVotant/{eventId}")
+  public Map<Long, Double> getMoyCodevotantarProjetKura(@PathVariable Long eventId) {
+
+    return evaluationService.calculMoyenneGeneralProjectVotantKura(eventId);
   }
 
 

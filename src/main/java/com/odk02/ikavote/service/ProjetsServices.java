@@ -22,4 +22,6 @@ public interface ProjetsServices {
 
   Projets getProjetsById(Long id);
 
+ // Double MoyFinalProjet(Long eventId);
+
 }

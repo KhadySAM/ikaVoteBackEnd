@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -36,56 +37,9 @@ public class EvaluationServiceImpl implements EvaluationService {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private EvenementsRepository evenementsRepository;
 
-
-/*
-  public Object addEvaluation(Long id_codevotant, Long id_critere, Long id_projet, Long note) {
-
-    // Vérifie si un code votant a déjà évalué ce projet
-    if (evaluationRepository.existsByCodevotantAndProjetsAndCriteres(codevotantRepository.findById(id_codevotant).get(),
-      projetsRepository.findById(id_projet).get(),
-      criteresRepository.findById(id_critere).get())) {
-      return "Vous avez déjà évalué ce projet sur ce critere";
-    } else {
-
-      Evaluation evaluation = new Evaluation();
-
-      evaluation.setCodevotant(codevotantRepository.findById(id_codevotant).get());
-
-      evaluation.setCriteres(criteresRepository.findById(id_critere).get());
-      evaluation.setProjets(projetsRepository.findById(id_projet).get());
-      evaluation.setNote(note);
-
-      evaluationRepository.save(evaluation);
-    }
-    return "Note envoyer";
-  }*/
-
-
-
-
-  /*public Object addEvaluationJury(Long id_critere, Long id_projet, Long id_user, Long note) {
-
-    // Vérifie si un code votant a déjà évalué ce projet
-    if (evaluationRepository.existsByUserAndProjetsAndCriteres(userRepository.findById(id_user).get(),
-      projetsRepository.findById(id_projet).get(),
-      criteresRepository.findById(id_critere).get())) {
-      return "Vous avez déjà évalué ce projet sur ce critere";
-    } else {
-
-      Evaluation evaluation = new Evaluation();
-
-
-      evaluation.setCriteres(criteresRepository.findById(id_critere).get());
-      evaluation.setProjets(projetsRepository.findById(id_projet).get());
-      evaluation.setUser(userRepository.findById(id_user).get());
-      evaluation.setNote(note);
-
-      evaluationRepository.save(evaluation);
-    }
-    return "Note envoyer";
-  }
-*/
 
   public Object addEvaluation(Long id_codevotant, Long id_critere, Long id_projet, Long note) {
 
@@ -99,12 +53,12 @@ public class EvaluationServiceImpl implements EvaluationService {
 
       Evaluation evaluation = new Evaluation();
 
-      if(projets.getMoyParcitipant()==null){
+    /*  if(projets.getMoyParcitipant()==null){
         projets.setMoyParcitipant(0L);
-      }
+      }*/
 
       evaluation.setCriteres(criteres);
-      projets.setMoyParcitipant(projets.getMoyParcitipant()+note);
+     // projets.setMoyParcitipant(projets.getMoyParcitipant()+note);
       evaluation.setProjets(projets);
       evaluation.setCodevotant(codevotant);
       evaluation.setNote(note);
@@ -123,10 +77,6 @@ public class EvaluationServiceImpl implements EvaluationService {
       User user = userRepository.findById(id_user).get();
 
 
-
-
-
-
     // Vérifie si un user a déjà évalué ce projet
     if (evaluationRepository.existsByUserAndProjetsAndCriteres(user,projets,criteres)){
       return "Vous avez déjà évalué ce projet sur ce critere";
@@ -134,12 +84,12 @@ public class EvaluationServiceImpl implements EvaluationService {
 
       Evaluation evaluation = new Evaluation();
 
-      if(projets.getMoyJury()==null){
+      /*if(projets.getMoyJury()==null){
         projets.setMoyJury(0L);
-      }
+      }*/
       evaluation.setCriteres(criteres);
-     // projets.setMoyJury(projets.getMoyJury()+note);
-      projets.setMoyJury((projets.getMoyJury()+note)/nbreJury());
+    // projets.setMoyJury(projets.getMoyJury()+note);
+     // projets.setMoyJury((projets.getMoyJury()+note)/nbreJury());
       evaluation.setProjets(projets);
       evaluation.setUser(user);
       evaluation.setNote(note);
@@ -150,40 +100,8 @@ public class EvaluationServiceImpl implements EvaluationService {
   }
 
 
-
-
-
-/*
- @Override
-  public Map<Long, Double> calculMoyenneGeneralProject() {
-    List<Evaluation> evaluations = evaluationRepository.findAll();
-    Map<Long, List<Long>> projectNote = new HashMap<>();
-
-
-    // Grouper les notes de chaque projet ensemble
-    for (Evaluation evaluation : evaluations) {
-      Long projectId = evaluation.getProjets().getId();
-      Long note = evaluation.getNote();
-      if ( !projectNote.containsKey(projectId)) {
-        projectNote.put(projectId, new ArrayList<>());
-      }
-      projectNote.get(projectId).add(note);
-    }
-
-    // Calculer la moyenne de chaque groupe de notes de projet
-    Map<Long, Double> moyProject = new HashMap<>();
-    for (Map.Entry<Long, List<Long>> entry : projectNote.entrySet()) {
-      Long projectId = entry.getKey();
-      List<Long> notes = entry.getValue();
-      Double moyenne = notes.stream().mapToDouble(val -> val).average().orElse(0.0);
-      moyProject.put(projectId, moyenne);
-    }
-
-    return moyProject;
-  }*/
-
   @Override
-  public Map<Long, Double> calculMoyenneGeneralProjectJury() {
+  public Map<Long, Double> calculMoyenneGeneralProjectVotant() {
 
 
     List<Evaluation> evaluations = evaluationRepository.findByUser(null);
@@ -217,39 +135,8 @@ public class EvaluationServiceImpl implements EvaluationService {
   }
 
 
-  /* @Override
-  public Map<Long, Double> calculMoyenneGeneralProjectJury() {
-
-
-    List<Evaluation> evaluations = evaluationRepository.findByUser(null);
-    Map<Long, List<Long>> projectNote = new HashMap<>();
-
-
-    // Grouper les notes de chaque projet ensemble
-    for (Evaluation evaluation : evaluations) {
-      Long projectId = evaluation.getProjets().getId();
-      Long note = evaluation.getNote();
-      if ( !projectNote.containsKey(projectId)) {
-        projectNote.put(projectId, new ArrayList<>());
-      }
-      projectNote.get(projectId).add(note);
-    }
-
-    // Calculer la moyenne de chaque groupe de notes de projet
-    Map<Long, Double> moyProject = new HashMap<>();
-    for (Map.Entry<Long, List<Long>> entry : projectNote.entrySet()) {
-      Long projectId = entry.getKey();
-      List<Long> notes = entry.getValue();
-      Double moyenne = notes.stream().mapToDouble(val -> val).average().orElse(0.0);
-      moyProject.put(projectId, moyenne);
-
-    }
-
-    return moyProject;
-  }
-*/
   @Override
-  public Map<Long, Double> calculMoyenneGeneralProjectParticipant() {
+  public Map<Long, Double> calculMoyenneGeneralProjectJury() {
     List<Evaluation> evaluations = evaluationRepository.findByCodevotant(null);
     Map<Long, List<Long>> projectNote = new HashMap<>();
 
@@ -279,6 +166,118 @@ public class EvaluationServiceImpl implements EvaluationService {
   @Override
   public Long nbreJury() {
     return evaluationRepository.nbreJury();
+  }
+
+  @Override
+  public Map<Long, Double> calculMoyenneGeneralProjectVotantKura(Long eventId) {
+    //======================================= iciiiiiiiiiiiiiiiiiiiiiiiiiiii22222222222222222222 ============================
+
+
+
+    List<Evaluation> evaluations = evaluationRepository.findByUser(null);
+
+    Evenements evenements=evenementsRepository.findById(eventId).get();
+
+    List<Evaluation> evaluationList=new ArrayList<>();
+    for (Evaluation ev:evaluations
+    ) {
+      if(ev.getProjets().getEvenements().equals(evenements)){
+        evaluationList.add(ev);
+      }
+
+    }
+
+
+
+    Map<Long, List<Long>> projectNote = new HashMap<>();
+
+
+    // Grouper les notes de chaque projet ensemble
+    for (Evaluation evaluation : evaluationList) {
+      Long projectId = evaluation.getProjets().getId();
+      Long note = evaluation.getNote();
+      if ( !projectNote.containsKey(projectId)) {
+        projectNote.put(projectId, new ArrayList<>());
+      }
+      projectNote.get(projectId).add(note);
+    }
+
+    // Calculer la moyenne de chaque groupe de notes de projet
+    Map<Long, Double> moyProject = new HashMap<>();
+    for (Map.Entry<Long, List<Long>> entry : projectNote.entrySet()) {
+      Long projectId = entry.getKey();
+      List<Long> notes = entry.getValue();
+      Double moyenne = notes.stream().mapToDouble(val -> val).average().orElse(0.0);
+      moyProject.put(projectId, moyenne);
+
+    }
+
+    moyProject.forEach((k,v)->{
+      Projets p=projetsRepository.findById(k).get();
+      p.setMoyParcitipant(v);
+      projetsRepository.save(p);
+    });
+
+    return moyProject;
+  }
+
+
+  @Override
+  public Map<Long, Double> calculMoyenneGeneralProjectJuryKura(Long eventId) {
+
+    //======================================= iciiiiiiiiiiiiiiiiiiiiiiiiiiii ============================
+
+
+
+    List<Evaluation> evaluations = evaluationRepository.findByCodevotant(null);
+
+    Evenements evenements=evenementsRepository.findById(eventId).get();
+
+    List<Evaluation> evaluationList=new ArrayList<>();
+    for (Evaluation ev:evaluations
+         ) {
+      if(ev.getProjets().getEvenements().equals(evenements)){
+        evaluationList.add(ev);
+      }
+
+    }
+
+
+
+    Map<Long, List<Long>> projectNote = new HashMap<>();
+
+
+    // Grouper les notes de chaque projet ensemble
+    for (Evaluation evaluation : evaluationList) {
+      Long projectId = evaluation.getProjets().getId();
+      Long note = evaluation.getNote();
+      if ( !projectNote.containsKey(projectId)) {
+        projectNote.put(projectId, new ArrayList<>());
+      }
+      projectNote.get(projectId).add(note);
+    }
+
+    // Calculer la moyenne de chaque groupe de notes de projet
+    Map<Long, Double> moyProject = new HashMap<>();
+    for (Map.Entry<Long, List<Long>> entry : projectNote.entrySet()) {
+      Long projectId = entry.getKey();
+      List<Long> notes = entry.getValue();
+      Double moyenne = notes.stream().mapToDouble(val -> val).average().orElse(0.0);
+      moyProject.put(projectId, moyenne);
+
+    }
+
+    moyProject.forEach((k,v)->{
+        Projets p=projetsRepository.findById(k).get();
+        p.setMoyJury(v);
+
+        p.setMoyTotal( ( (p.getMoyJury()* p.getEvenements().getCoefficientJury()) /100) + ( (p.getMoyParcitipant()* p.getEvenements().getCoefficientUser()) /100) );
+       // projetsRepository.save(p);
+
+        projetsRepository.save(p);
+    });
+
+    return moyProject;
   }
 
 
