@@ -20,4 +20,14 @@ public class CodeVotantController {
 
     return codevotantService.getCodeVotantByIdEvent(idevents);
   }
+
+
+  @GetMapping("/getonecode/{id}")
+  public Object afficherUnCodeParId(@PathVariable Long id) {
+
+    return codevotantService.getCodevotantById(id);
+  }
+
+
+
 }

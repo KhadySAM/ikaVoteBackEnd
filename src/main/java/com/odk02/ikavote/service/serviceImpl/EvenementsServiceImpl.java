@@ -121,4 +121,11 @@ public class EvenementsServiceImpl implements EvenementsService {
     return 0;
   }
 
+
+
+/*  @Override
+  public Evenements avoirEventParCodeVotant(Long code) {
+    return evenementsRepository.findEvenementByCodevotant(code);
+  }*/
+
 }

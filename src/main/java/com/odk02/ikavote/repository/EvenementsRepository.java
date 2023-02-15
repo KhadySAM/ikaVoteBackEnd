@@ -14,5 +14,7 @@ public interface EvenementsRepository extends JpaRepository <Evenements , Long> 
 
   List<Evenements> findEvenementByProjets(Projets projets);
 
+  // Evenements findByCodevotant(Long code);
+
 
 }

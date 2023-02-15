@@ -25,4 +25,6 @@ public interface EvenementsService {
  // Map<Long, Double> calculateAverageTotalForProjects(Long eventId);
 
   double calculerMoyenneTotaleDeTousLesProjets();
+
+
 }

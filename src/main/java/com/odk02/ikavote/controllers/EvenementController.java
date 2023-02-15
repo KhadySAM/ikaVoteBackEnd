@@ -6,6 +6,7 @@ import com.odk02.ikavote.models.Evenements;
 import com.odk02.ikavote.repository.AuthentificationRepository;
 import com.odk02.ikavote.repository.PaysRepository;
 import com.odk02.ikavote.repository.ProjetsRepository;
+import com.odk02.ikavote.service.CodevotantService;
 import com.odk02.ikavote.service.EvenementsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,9 @@ public class EvenementController {
 
     @Autowired
     EvenementsService evenementsService;
+
+    @Autowired
+    CodevotantService codevotantService;
 
 
     @Autowired
@@ -149,9 +153,14 @@ public class EvenementController {
         return evenementsService.supprimerEvenements(id);
     }
 
- /* @GetMapping("/moyenneTotaleDeChaqueProjet/{idEvenement}")
-  public double calculerMoyenneTotaleDeChaqueProjetPourUnEvenementDonne(@PathVariable Long idEvenement) {
 
-    return evenementsService.calculateAverageTotalForProjects(idEvenement).size();
+
+
+ /* @GetMapping("/afficherEventParCode/{code}")
+  public Evenements getEventWhitCodevotant(@PathVariable Long code){
+    return evenementsService.avoirEventParCodeVotant(code);
   }*/
+
+
+
 }

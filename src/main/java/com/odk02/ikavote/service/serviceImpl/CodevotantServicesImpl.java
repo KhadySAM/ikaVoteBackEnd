@@ -50,5 +50,18 @@ public class CodevotantServicesImpl implements CodevotantService {
     return codevotantRepository.findCodevotantByEvenements(evenements.get());
   }
 
+  @Override
+  public Codevotant getCodevotantById(Long id) {
+    return codevotantRepository.findById(id).orElse(null);
+  }
+
+
+ /* @Override
+  public Evenements EventParCodeVotant(Codevotant codevotant) {
+    return codevotantRepository.findEvenementsByCodevotant(codevotant); //codevotantRepository.findEvenementByCodevotant(code);
+  }*/
+
+
+
 
 }

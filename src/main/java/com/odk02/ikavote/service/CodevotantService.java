@@ -13,6 +13,10 @@ public interface CodevotantService {
 
   List<Codevotant> getCodeVotantByIdEvent(Long idevents);
 
+  Codevotant getCodevotantById(Long id);
+
+
+
   // Object faireUneEvaluation(Evaluation evaluation, Codevotant codevotant);
 
 }
