@@ -28,6 +28,12 @@ public class CodeVotantController {
     return codevotantService.getCodevotantById(id);
   }
 
+  @GetMapping("/getEvByCode/{code}")
+  public Object afficherUnEvParCode(@PathVariable Long code) {
+
+    return codevotantService.getCodevotantByCode(code);
+  }
+
 
 
 }

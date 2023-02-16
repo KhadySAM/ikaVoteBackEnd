@@ -11,9 +11,7 @@ import java.util.List;
 @Repository
 public interface CodevotantRepository extends JpaRepository<Codevotant, Long> {
 
-  // Evenements findEvenementByCodevotant(Long code);
-
-  //Codevotant findEvenementsByCodevotant(Long idCode);
+  Codevotant findByCode(Long code);
 
   List<Codevotant> findCodevotantByEvenements(Evenements evenements);
 

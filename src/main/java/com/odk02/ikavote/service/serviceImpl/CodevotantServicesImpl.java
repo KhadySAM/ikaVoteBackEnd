@@ -55,6 +55,17 @@ public class CodevotantServicesImpl implements CodevotantService {
     return codevotantRepository.findById(id).orElse(null);
   }
 
+  @Override
+  public Object getCodevotantByCode(Long code) {
+
+    if (codevotantRepository.findByCode(code) == null) {
+      return "Ce code n'est associer à aucun evenement";
+    } else {
+
+      return codevotantRepository.findByCode(code);
+    }
+  }
+
 
  /* @Override
   public Evenements EventParCodeVotant(Codevotant codevotant) {

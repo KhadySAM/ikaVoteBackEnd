@@ -15,6 +15,8 @@ public interface CodevotantService {
 
   Codevotant getCodevotantById(Long id);
 
+  Object getCodevotantByCode(Long code);
+
 
 
   // Object faireUneEvaluation(Evaluation evaluation, Codevotant codevotant);
