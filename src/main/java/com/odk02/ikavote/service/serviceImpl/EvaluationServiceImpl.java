@@ -11,6 +11,7 @@ import com.odk02.ikavote.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -126,6 +127,8 @@ public class EvaluationServiceImpl implements EvaluationService {
       Long projectId = entry.getKey();
       List<Long> notes = entry.getValue();
       Double moyenne = notes.stream().mapToDouble(val -> val).average().orElse(0.0);
+      DecimalFormat df = new DecimalFormat("#.##");
+      df.format(moyenne);
       moyProject.put(projectId, moyenne);
    //   projets.setMoyJury(moyenne);
 
@@ -263,6 +266,8 @@ public class EvaluationServiceImpl implements EvaluationService {
       Long projectId = entry.getKey();
       List<Long> notes = entry.getValue();
       Double moyenne = notes.stream().mapToDouble(val -> val).average().orElse(0.0);
+      DecimalFormat df = new DecimalFormat("#.##");
+      df.format(moyenne);
       moyProject.put(projectId, moyenne);
 
     }
@@ -271,11 +276,20 @@ public class EvaluationServiceImpl implements EvaluationService {
         Projets p=projetsRepository.findById(k).get();
         p.setMoyJury(v);
 
-        p.setMoyTotal( ( (p.getMoyJury()* p.getEvenements().getCoefficientJury()) /100) + ( (p.getMoyParcitipant()* p.getEvenements().getCoefficientUser()) /100) );
-       // projetsRepository.save(p);
+       /* p.setMoyTotal( ( (p.getMoyJury()* p.getEvenements().getCoefficientJury()) /100) + ( (p.getMoyParcitipant()* p.getEvenements().getCoefficientUser()) /100) );
 
-        projetsRepository.save(p);
-    });
+        projetsRepository.save(p);*/
+
+        double moyTotal = ((p.getMoyJury() * p.getEvenements().getCoefficientJury()) / 100)
+          + ((p.getMoyParcitipant() * p.getEvenements().getCoefficientUser()) / 100);
+        p.setMoyTotal(moyTotal);
+
+
+        String moyTotalFormatted = String.format("%.2f", p.getMoyTotal());
+      projetsRepository.save(p);
+        System.out.println("Moyenne totale : " + moyTotalFormatted);
+
+      });
 
     return moyProject;
   }

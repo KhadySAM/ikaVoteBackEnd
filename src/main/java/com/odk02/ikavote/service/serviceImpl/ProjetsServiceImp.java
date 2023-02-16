@@ -96,7 +96,7 @@ public class ProjetsServiceImp implements ProjetsServices {
 
   @Override
   public Projets getProjetsById(Long id) {
-    return null;
+    return projetsRepository.findById(id).orElse(null);
   }
 
 
