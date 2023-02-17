@@ -17,6 +17,8 @@ public interface CodevotantService {
 
   Object getCodevotantByCode(Long code);
 
+  List<Codevotant> afficherTousLesCodeVotant();
+
 
 
   // Object faireUneEvaluation(Evaluation evaluation, Codevotant codevotant);

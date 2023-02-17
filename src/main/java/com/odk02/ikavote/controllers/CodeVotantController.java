@@ -1,6 +1,7 @@
 package com.odk02.ikavote.controllers;
 
 import com.odk02.ikavote.models.Codevotant;
+import com.odk02.ikavote.models.Evenements;
 import com.odk02.ikavote.service.CodevotantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,12 +16,18 @@ public class CodeVotantController {
   @Autowired
   CodevotantService codevotantService;
 
+
+  @GetMapping("/getallcodevotant")
+  public List<Codevotant> getAll() {
+
+    return codevotantService.afficherTousLesCodeVotant();
+  }
+
   @GetMapping("/qrcodebyevents/{idevents}")
   public List<Codevotant> getCodeVotantByEventsId(@PathVariable Long idevents) {
 
     return codevotantService.getCodeVotantByIdEvent(idevents);
   }
-
 
   @GetMapping("/getonecode/{id}")
   public Object afficherUnCodeParId(@PathVariable Long id) {

@@ -20,5 +20,4 @@ public interface CodevotantRepository extends JpaRepository<Codevotant, Long> {
 
 
 
-
 }

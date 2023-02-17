@@ -18,4 +18,5 @@ public interface CriteresRepository extends JpaRepository<Criteres, Long> {
  // List<Projets> findProjetsByEvenements(Evenements evenements);
  List<Criteres> findCritersByEvenements(Evenements evenements);
 
+
 }

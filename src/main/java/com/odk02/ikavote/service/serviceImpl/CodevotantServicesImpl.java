@@ -66,6 +66,11 @@ public class CodevotantServicesImpl implements CodevotantService {
     }
   }
 
+  @Override
+  public List<Codevotant> afficherTousLesCodeVotant() {
+    return codevotantRepository.findAll();
+  }
+
 
  /* @Override
   public Evenements EventParCodeVotant(Codevotant codevotant) {
