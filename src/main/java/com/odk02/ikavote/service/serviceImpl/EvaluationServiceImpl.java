@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
 
 
 @Service
@@ -54,12 +54,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 
       Evaluation evaluation = new Evaluation();
 
-    /*  if(projets.getMoyParcitipant()==null){
-        projets.setMoyParcitipant(0L);
-      }*/
-
       evaluation.setCriteres(criteres);
-     // projets.setMoyParcitipant(projets.getMoyParcitipant()+note);
       evaluation.setProjets(projets);
       evaluation.setCodevotant(codevotant);
       evaluation.setNote(note);
