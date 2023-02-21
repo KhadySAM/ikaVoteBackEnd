@@ -22,14 +22,8 @@ public class CriteresServiceImpl implements CriteresService {
   EvenementsRepository evenementsRepository;
   @Override
   public Object ajouterCriteres(Criteres criteres) {
-    if(criteresRepository.findByTitre(criteres.getTitre()) == null) {
-
-      criteresRepository.save(criteres);
-
-      return "criteres ajouter succès";
-    }else {
-      return "ce criteres existe déjà";
-    }
+    criteresRepository.save(criteres);
+    return "criteres ajouter succès";
   }
 
   @Override

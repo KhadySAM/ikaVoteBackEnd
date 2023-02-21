@@ -39,24 +39,6 @@ public class ProjetController {
     return projetsServices.getProjectsWithEvent(idEvents);
   }
 
-/*  @PostMapping("/ajoutprojet/{nomevent}")
-  @PostAuthorize("hasAuthority('SUPERADMIN')")
-  public Object addProjets( @PathVariable ("nomevent") String nomevent,
-    @Param("libelle") String libelle,
-    @Param("description") String description,
-    @Param("file") MultipartFile file) throws IOException {
-
-    Projets projets = new Projets();
-    projets.setLibelle(libelle);
-    projets.setDescription(description);
-    projets.setEvenements(evenementsRepository.findByLibelle(nomevent));
-    projets.setImages(ConfigImg.save(file,file.getOriginalFilename()));
-
-
-    return projetsServices.ajouterProjets(projets);
-
-  }*/
-
   @PostMapping("/ajoutprojet/{idEvents}")
  // @PostAuthorize("hasAuthority('SUPERADMIN')")
   public Object addProjets( @PathVariable ("idEvents") Long idEvents,

@@ -11,10 +11,12 @@ import com.odk02.ikavote.service.EvenementsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -70,6 +72,7 @@ public class EvenementController {
 
   // Ajouter un pays
   @PostMapping("/ajoutevents/{nompays}/{libelleauth}")
+ // @PostAuthorize("hasAuthority('ADMIN')")
   public Object addEvents(@PathVariable("nompays") String nompays, @PathVariable("libelleauth") String libelleauth,
     @Param("libelle") String libelle,
     @Param("dateDebut") Date dateDebut,
@@ -79,6 +82,8 @@ public class EvenementController {
     @Param("coefficientJury") Double coefficientJury,
     @Param("nbreVotant") Integer nbreVotant,
     @Param("file") MultipartFile file) throws IOException {
+
+    Date d = new Date();
 
 
     Evenements evenements = new Evenements();
@@ -93,14 +98,18 @@ public class EvenementController {
     evenements.setAuthentification(authentificationRepository.findByLibelle(libelleauth));
     evenements.setPays(paysRepository.findByNom(nompays));
     evenements.setImages(ConfigImg.save(file,file.getOriginalFilename()));
+    if (evenements.getDateDebut().equals(d) || evenements.getDateDebut().after(d)){
 
-    if (evenements.getDateFin().before(evenements.getDateDebut())) {
-      return "La date de début ne peut pas être après la date de fin";
-    } else if (coefficientJury + coefficientUser != 100) {
-      return "Attention la somme des coefficients user et jury est toujours egale à 100% ";
-    }
-    else {
-      return evenementsService.ajouterEvenements(evenements);
+      if (evenements.getDateFin().equals(evenements.getDateDebut()) || evenements.getDateFin().before(evenements.getDateDebut())) {
+        return "La date de début ne peut pas être après la date de fin";
+      } else if (coefficientJury + coefficientUser != 100) {
+        return "Attention la somme des coefficients user et jury est toujours egale à 100% ";
+      }
+      else {
+        return evenementsService.ajouterEvenements(evenements);
+      }
+    } else {
+      return "La date de debut est après la date du jour";
     }
 
   }
