@@ -24,7 +24,7 @@ public class Criteres {
   private String titre;
 
   @NotBlank
-  @Size(max =50)
+  //@Size(max =50)
   private  String contenu;
 
 // a enlever
