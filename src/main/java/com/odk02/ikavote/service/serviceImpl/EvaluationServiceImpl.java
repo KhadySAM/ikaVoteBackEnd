@@ -122,8 +122,6 @@ public class EvaluationServiceImpl implements EvaluationService {
     List<Evaluation> evaluations = evaluationRepository.findByUser(null);
     Map<Long, List<Long>> projectNote = new HashMap<>();
 
-  //  Projets projets = new Projets();
-
 
     // Grouper les notes de chaque projet ensemble
     for (Evaluation evaluation : evaluations) {
@@ -144,8 +142,6 @@ public class EvaluationServiceImpl implements EvaluationService {
       DecimalFormat df = new DecimalFormat("#.##");
       df.format(moyenne);
       moyProject.put(projectId, moyenne);
-   //   projets.setMoyJury(moyenne);
-
     }
 
     return moyProject;
@@ -190,7 +186,6 @@ public class EvaluationServiceImpl implements EvaluationService {
     //======================================= iciiiiiiiiiiiiiiiiiiiiiiiiiiii22222222222222222222 ============================
 
 
-
     List<Evaluation> evaluations = evaluationRepository.findByUser(null);
 
     Evenements evenements=evenementsRepository.findById(eventId).get();
@@ -204,10 +199,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 
     }
 
-
-
     Map<Long, List<Long>> projectNote = new HashMap<>();
-
 
     // Grouper les notes de chaque projet ensemble
     for (Evaluation evaluation : evaluationList) {

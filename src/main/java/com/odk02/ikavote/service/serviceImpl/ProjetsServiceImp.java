@@ -26,7 +26,7 @@ public class ProjetsServiceImp implements ProjetsServices {
   @Override
   public Object ajouterProjets(Projets projets) {
 
-    if(projetsRepository.findByLibelle(projets.getLibelle()) == null) {
+    if(projetsRepository.findByLibelle(projets.getLibelle()) != null) {
 
       projetsRepository.save(projets);
 
