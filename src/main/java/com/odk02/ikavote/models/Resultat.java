@@ -19,12 +19,16 @@ public class Resultat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // a enlever
-    private  Double note;
+
+    private  Double noteFinal;
+
+    private  Double noteJury;
+
+    private  Double noteVotant;
 
 
     //Les jointures
     @JoinColumn(name = "id_projet")
-    @OneToOne
+    @ManyToOne
     private Projets projets;
 }

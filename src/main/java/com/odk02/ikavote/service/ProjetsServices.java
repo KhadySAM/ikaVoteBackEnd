@@ -1,7 +1,6 @@
 package com.odk02.ikavote.service;
 
 
-import com.odk02.ikavote.models.Evenements;
 import com.odk02.ikavote.models.Projets;
 
 import java.util.List;
@@ -21,7 +20,5 @@ public interface ProjetsServices {
   List<Projets> getProjectsWithEvent(Long idevents);
 
   Projets getProjetsById(Long id);
-
- // Double MoyFinalProjet(Long eventId);
 
 }

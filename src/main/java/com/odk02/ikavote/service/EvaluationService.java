@@ -16,4 +16,7 @@ public interface EvaluationService {
 
   Map<Long, Double> calculMoyenneGeneralProjectJury(Long eventId);
 
+
+
+
 }

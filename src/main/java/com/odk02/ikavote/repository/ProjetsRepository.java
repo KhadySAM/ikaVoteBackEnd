@@ -16,4 +16,6 @@ public interface ProjetsRepository extends JpaRepository  <Projets, Long> {
 
   List<Projets> findProjetsByEvenements(Evenements evenements);
 
+
+
 }

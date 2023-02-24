@@ -23,8 +23,6 @@ public class Evaluation {
   private Long note;
 
 
-  //Les jointures
-
 
   @JoinColumn(name = "id_user")
   @ManyToOne

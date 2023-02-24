@@ -48,11 +48,11 @@ public class EvenementController {
   }
 
     // Afficher tous les evenements
-    @GetMapping("/getallevents")
-    public List<Evenements> getAll() {
+  @GetMapping("/getallevents")
+  public List<Evenements> getAll() {
 
-        return evenementsService.afficherTousLesEvenements();
-    }
+      return evenementsService.afficherTousLesEvenements();
+  }
 
 
   @GetMapping("/eventsbyprojet/{id}")
