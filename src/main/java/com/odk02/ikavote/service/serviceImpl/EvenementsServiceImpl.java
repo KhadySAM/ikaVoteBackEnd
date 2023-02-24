@@ -52,7 +52,7 @@ public class EvenementsServiceImpl implements EvenementsService {
   public Object supprimerEvenements(Long id) {
 
     Optional<Evenements> evenements = evenementsRepository.findById(id);
-    if (evenements.isPresent()) {
+    if (!evenements.isPresent()) {
       return "Ce Evenements n'existe pas !";
     } else {
 

@@ -9,21 +9,11 @@ public interface EvaluationService {
 
   Object addEvaluationJury(Long id_user, Long id_critere, Long id_projet, Long note);
 
-  Object addEvaluation(Long id_codevotant, Long id_critere, Long id_projet, Long note);
-
- // Map<Long, Double> calculMoyenneGeneralProject();
-
-  Map<Long, Double> calculMoyenneGeneralProjectVotant();
-
-  Map<Long, Double> calculMoyenneGeneralProjectJury();
+  Object addEvaluationVotant(Long id_codevotant, Long id_critere, Long id_projet, Long note);
 
 
-  Long nbreJury();
+  Map<Long, Double> calculMoyenneGeneralProjectVotant(Long eventId);
 
- // Map<Long, Double> calculMoyenneGeneralProjectJurykura(Long idEvents);
-
-  Map<Long, Double> calculMoyenneGeneralProjectVotantKura(Long eventId);
-
-  Map<Long, Double> calculMoyenneGeneralProjectJuryKura(Long eventId);
+  Map<Long, Double> calculMoyenneGeneralProjectJury(Long eventId);
 
 }

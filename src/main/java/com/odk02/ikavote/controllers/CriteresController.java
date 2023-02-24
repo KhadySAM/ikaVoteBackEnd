@@ -86,8 +86,8 @@ public class CriteresController {
   }
 
   // Supprimer un Criteres par id
-  @DeleteMapping("/supprimecriteres/{id}")
-  @PostAuthorize("hasAuthority('SUPERADMIN')")
+  @DeleteMapping("/deletecritere/{id}")
+ // @PostAuthorize("hasAuthority('SUPERADMIN')")
   public Object deleteCritere(@PathVariable Long id) {
 
     return  criteresService.supprimerCriteres(id);

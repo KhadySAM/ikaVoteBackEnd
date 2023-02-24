@@ -29,7 +29,7 @@ public class CriteresServiceImpl implements CriteresService {
   @Override
   public Object supprimerCriteres(Long id) {
     Optional<Criteres> criteres = criteresRepository.findById(id);
-    if (criteres.isPresent()) {
+    if (!criteres.isPresent()) {
       return "Ce critere n'existe pas !";
     }
     else {
