@@ -18,6 +18,7 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
 
    List<Evaluation> findByCodevotant(Codevotant codevotant);
 
+  List<Evaluation> findByProjetsId(Long idProjets);
 
 
 

@@ -4,6 +4,7 @@ import com.odk02.ikavote.models.*;
 import com.odk02.ikavote.repository.CriteresRepository;
 import com.odk02.ikavote.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -67,7 +68,11 @@ public class EvaluationController {
     return evaluationService.calculMoyenneGeneralProjectVotant(eventId);
   }
 
+  @GetMapping("/resultat/{idEvents}")
+ // @PostAuthorize("hasAuthority('SUPERADMIN')")
+  public void calculerResultatPourEvenement(@PathVariable Long idEvents) {
 
-
+       evaluationService.calculerResultatPourEvenement(idEvents);
+  }
 
 }

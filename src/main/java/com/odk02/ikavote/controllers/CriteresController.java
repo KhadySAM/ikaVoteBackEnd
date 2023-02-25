@@ -63,7 +63,7 @@ public class CriteresController {
 
   // Afficher tous les Criteres enregistrer
   @GetMapping("/getallcritere")
-  @PostAuthorize("hasAuthority('SUPERADMIN')")
+ // @PostAuthorize("hasAuthority('SUPERADMIN')")
   public List <Criteres> getAllCriteres() {
 
     return criteresService.afficherTousLesCriteres();
@@ -71,7 +71,7 @@ public class CriteresController {
 
   // Afficher un Criteres par id
   @GetMapping("/getonetcriteres/{id}")
-  @PostAuthorize("hasAuthority('SUPERADMIN')")
+ // @PostAuthorize("hasAuthority('SUPERADMIN')")
   public Object afficherCriteresParId(@PathVariable Long id) {
 
     return criteresService.afficherUnCriteres(id);
@@ -79,7 +79,7 @@ public class CriteresController {
 
   // Modifier un criteres par id
   @PutMapping("/modifiercriteres/{id}")
-  @PostAuthorize("hasAuthority('SUPERADMIN')")
+ // @PostAuthorize("hasAuthority('SUPERADMIN')")
   public  Object updateCriteres(@RequestBody Criteres criteres, @PathVariable Long id) {
 
     return criteresService.ModifierCriteres(criteres, id);

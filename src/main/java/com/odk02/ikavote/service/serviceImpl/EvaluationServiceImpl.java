@@ -39,6 +39,9 @@ public class EvaluationServiceImpl implements EvaluationService {
   @Autowired
   private EvenementsRepository evenementsRepository;
 
+  @Autowired
+  private ResultatRepository resultatRepository;
+
 
   @Override
   public Object addEvaluationVotant(Long id_codevotant, Long id_critere, Long id_projet, Long note) {
@@ -173,7 +176,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 
     moyProject.forEach((k,v)->{
       Projets p=projetsRepository.findById(k).get();
-      p.setMoyParcitipant(v);
+    //  p.setMoyParcitipant(v);
       projetsRepository.save(p);
     });
 
@@ -222,14 +225,14 @@ public class EvaluationServiceImpl implements EvaluationService {
 
     moyProject.forEach((k,v)->{
         Projets p=projetsRepository.findById(k).get();
-        p.setMoyJury(v);
+      //  p.setMoyJury(v);
 
-        double moyTotal = ((p.getMoyJury() * p.getEvenements().getCoefficientJury()) / 100)
+      /*  double moyTotal = ((p.getMoyJury() * p.getEvenements().getCoefficientJury()) / 100)
           + ((p.getMoyParcitipant() * p.getEvenements().getCoefficientUser()) / 100);
-        p.setMoyTotal(moyTotal);
+        p.setMoyTotal(moyTotal);*/
 
-        DecimalFormat df = new DecimalFormat("#.##");
-        df.format(p.getMoyTotal());
+        /*DecimalFormat df = new DecimalFormat("#.##");
+        df.format(p.getMoyTotal());*/
 
         /*String moyTotalFormatted = String.format("%.2f", p.getMoyTotal());*/
         projetsRepository.save(p);
@@ -240,6 +243,48 @@ public class EvaluationServiceImpl implements EvaluationService {
     return moyProject;
   }
 
+  @Override
+  public void calculerResultatPourEvenement(Long idEvents) {
+    // Trouver tous les projets pour l'événement donné
+    List<Projets> allprojets = projetsRepository.findByEvenementsId(idEvents);
+
+    // Pour chaque projet, calculer la moyenne des notes des évaluations associées
+    for (Projets projets : allprojets) {
+      List<Evaluation> evaluations = evaluationRepository.findByProjetsId(projets.getId());
+
+      Double moyenneJury = evaluations.stream()
+        .filter(evaluation -> evaluation.getUser() != null)
+        .mapToDouble(Evaluation::getNote)
+        .average()
+        .orElse(0.0);
+
+      Double moyenneVotant = evaluations.stream()
+        .filter(evaluation -> evaluation.getCodevotant() != null)
+        .mapToDouble(Evaluation::getNote)
+        .average()
+        .orElse(0.0);
+
+      // Multiplier les moyennes par les coefficients
+      Double coefficientJury = projets.getEvenements().getCoefficientJury() / 100;
+      Double coefficientVotant = projets.getEvenements().getCoefficientUser() / 100;
+      Double moyenneJuryPonderee = moyenneJury * coefficientJury;
+      Double moyenneVotantPonderee = moyenneVotant * coefficientVotant;
+
+      DecimalFormat dfJ = new DecimalFormat("#.##");
+      dfJ.format(moyenneJuryPonderee);
+
+      DecimalFormat dfV = new DecimalFormat("#.##");
+      dfV.format(moyenneVotantPonderee);
+
+      // Enregistrer le résultat dans la base de données
+      Resultat resultat = new Resultat();
+      resultat.setProjets(projets);
+      resultat.setNoteJury(moyenneJuryPonderee);
+      resultat.setNoteVotant(moyenneVotantPonderee);
+      resultat.setNoteFinal(moyenneJuryPonderee + moyenneVotantPonderee);
+      resultatRepository.save(resultat);
+    }
+  }
 
 }
 

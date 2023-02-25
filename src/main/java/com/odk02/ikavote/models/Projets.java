@@ -26,14 +26,14 @@ public class Projets {
   private String libelle;
 
   @NotBlank
-  @Size(max =50)
+//  @Size(max =50)
   private  String description;
 
-  private  Double moyJury;
+  /*  private  Double moyJury;
 
-  private  Double moyParcitipant;
+ private  Double moyParcitipant;
 
-  private  Double moyTotal;
+  private  Double moyTotal;*/
 
   @NotBlank
   private String images;
