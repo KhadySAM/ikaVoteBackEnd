@@ -21,4 +21,6 @@ public interface ProjetsServices {
 
   Projets getProjetsById(Long id);
 
+  Boolean existsProjets(String libelle);
+
 }

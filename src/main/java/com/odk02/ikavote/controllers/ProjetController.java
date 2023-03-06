@@ -73,7 +73,7 @@ public class ProjetController {
   }
 
     @PutMapping("/modifierprojet/{id}")
-    @PostAuthorize("hasAuthority('SUPERADMIN')")
+   // @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object updatePays(@PathVariable Long id,
                              @Param("libelle") String libelle,
                              @Param("description") String description,
@@ -88,9 +88,16 @@ public class ProjetController {
     }
 
     @DeleteMapping("/supprimeprojet/{id}")
-    @PostAuthorize("hasAuthority('SUPERADMIN')")
+   // @PostAuthorize("hasAuthority('SUPERADMIN')")
     public Object deleteProjets(@PathVariable Long id) {
 
         return projetsServices.supprimerProjets(id);
     }
+
+  @GetMapping("/checkProjets/{libelle}")
+  public boolean checkProjets(@PathVariable("libelle") String libelle) {
+
+    return projetsServices.existsProjets(libelle);
+
+  }
 }

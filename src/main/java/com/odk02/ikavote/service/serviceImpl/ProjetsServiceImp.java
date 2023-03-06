@@ -99,6 +99,11 @@ public class ProjetsServiceImp implements ProjetsServices {
     return projetsRepository.findById(id).orElse(null);
   }
 
+  @Override
+  public Boolean existsProjets(String libelle) {
+    return projetsRepository.existsProjetsByLibelle(libelle);
+  }
+
 
 
 

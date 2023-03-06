@@ -15,6 +15,8 @@ public interface CodevotantService {
 
   Codevotant getCodevotantById(Long id);
 
+ // Codevotant getCodevotantByCode(Long codevotant);
+
   Object getCodevotantByCode(Long code);
 
   List<Codevotant> afficherTousLesCodeVotant();

@@ -83,5 +83,11 @@ public class PaysServiceImpl implements PaysService {
     return paysRepository.findAll();
   }
 
+  @Override
+  public Boolean existsByNomPays(String nom) {
+    return paysRepository.existsByNom(nom);
+  }
+
+
 
 }

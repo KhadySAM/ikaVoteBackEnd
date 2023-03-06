@@ -83,11 +83,11 @@ public class AuthController {
         .body(new MessageResponse("Erreur: le nom d'utilisateur est déjà pris!"));
     }
 
-    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-      return ResponseEntity
-        .badRequest()
-        .body(new MessageResponse("Erreur: l'e-mail est déjà utilisé!"));
-    }
+//    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+//      return ResponseEntity
+//        .badRequest()
+//        .body(new MessageResponse("Erreur: l'e-mail est déjà utilisé!"));
+//    }
 
 
 

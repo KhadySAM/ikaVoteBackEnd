@@ -121,6 +121,11 @@ public class EvenementsServiceImpl implements EvenementsService {
     return 0;
   }
 
+  @Override
+  public Boolean existsByNom(String libelle) {
+    return evenementsRepository.existsByLibelle(libelle);
+  }
+
 
 
 /*  @Override

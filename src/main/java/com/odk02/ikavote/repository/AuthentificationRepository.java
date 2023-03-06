@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface AuthentificationRepository extends JpaRepository<Authentification, Long> {
 
   public Authentification findByLibelle(String libelle);
+
+  Boolean existsAuthentificationBylibelle(String libelle);
 }

@@ -89,6 +89,32 @@ public class EvaluationServiceImpl implements EvaluationService {
   }
 
   @Override
+  public boolean checkEvaluation(Long id_codevotant, Long id_projet) {
+
+
+
+    Projets projets = projetsRepository.findById(id_projet).get();
+
+    Codevotant codevotant = codevotantRepository.findById(id_codevotant).get();
+
+    return evaluationRepository.existsByCodevotantAndProjets(codevotant, projets);
+  }
+
+  @Override
+  public boolean checkEvaluationUser(Long id_user , Long id_projet) {
+    System.out.println("AVANT ddddddddddddddddddddddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbdddddddddddd"+ id_projet);
+
+    Projets projets = projetsRepository.findById(id_projet).get();
+
+    System.out.println("Apres ddddddddddddddddddddddbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbdddddddddddd" + id_projet);
+
+    User user = userRepository.findById(id_user).get();
+
+    return evaluationRepository.existsByUserAndProjets(user, projets);
+  }
+
+
+  @Override
   public Object addEvaluationJury(Long id_critere, Long id_projet, Long id_user, Long note) {
 
     Criteres criteres = criteresRepository.findById(id_critere).get();
@@ -120,8 +146,8 @@ public class EvaluationServiceImpl implements EvaluationService {
                 evaluation.setProjets(projets);
                 evaluation.setUser(user);
                 evaluation.setNote(note);
-                evaluationRepository.save(evaluation);
 
+                evaluationRepository.save(evaluation);
               }
               return "Note envoyer";
             } else {

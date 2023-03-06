@@ -72,4 +72,11 @@ public class TypeAuthController {
     return  authentificationService.supprimerTypesAuth(id);
   }
 
+  @GetMapping("/checkTypeAuth/{libelle}")
+  public boolean checkTypeAuthentifiacation(@PathVariable("libelle") String libelle) {
+
+    return authentificationService.existsByTypeAuth(libelle);
+
+  }
+
 }

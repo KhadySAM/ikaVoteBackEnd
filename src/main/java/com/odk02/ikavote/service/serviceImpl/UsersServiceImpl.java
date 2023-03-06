@@ -28,6 +28,16 @@ public class UsersServiceImpl implements UsersService {
     }
   }
 
+  @Override
+  public boolean checkUserByEmail(String email) {
+    return userRepository.existsByEmail(email);
+  }
+
+  @Override
+  public boolean checkUserByUsername(String username) {
+    return userRepository.existsByUsername(username);
+  }
+
 /* @Override
   public User AfficherAdmin(Long id) {
     return userRepository.findByAdminRole(id);

@@ -17,4 +17,6 @@ public interface PaysService {
 
   List<Pays> afficherTousLesPays();
 
+  Boolean existsByNomPays(String nom);
+
 }

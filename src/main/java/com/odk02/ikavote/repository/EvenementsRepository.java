@@ -16,5 +16,7 @@ public interface EvenementsRepository extends JpaRepository <Evenements , Long> 
 
   // Evenements findByCodevotant(Long code);
 
+    Boolean existsByLibelle(String libelle);
+
 
 }

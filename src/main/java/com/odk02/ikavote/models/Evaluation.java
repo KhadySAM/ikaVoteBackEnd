@@ -22,6 +22,8 @@ public class Evaluation {
 
   private Long note;
 
+  private Double NoteParVotant;
+
 
 
   @JoinColumn(name = "id_user")

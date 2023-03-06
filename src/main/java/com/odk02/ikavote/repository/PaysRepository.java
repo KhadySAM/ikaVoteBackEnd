@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PaysRepository extends JpaRepository<Pays, Long> {
 
-   public Pays findByNom(String nom);
+   Pays findByNom(String nom);
+
+   Boolean existsByNom(String nom);
 
 
 

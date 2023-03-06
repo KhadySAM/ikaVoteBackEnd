@@ -4,6 +4,7 @@ import com.odk02.ikavote.img.ConfigImg;
 import com.odk02.ikavote.models.Evenements;
 
 import com.odk02.ikavote.repository.AuthentificationRepository;
+import com.odk02.ikavote.repository.EvenementsRepository;
 import com.odk02.ikavote.repository.PaysRepository;
 import com.odk02.ikavote.repository.ProjetsRepository;
 import com.odk02.ikavote.service.CodevotantService;
@@ -34,6 +35,9 @@ public class EvenementController {
 
     @Autowired
     CodevotantService codevotantService;
+
+  @Autowired
+  EvenementsRepository evenementsRepository;
 
 
     @Autowired
@@ -162,13 +166,18 @@ public class EvenementController {
         return evenementsService.supprimerEvenements(id);
     }
 
+/*  @GetMapping("/checkevent/{libelle}")
+  public boolean checkEmail(@PathVariable("libelle") String libelle) {
 
+    return evenementsService.existsByNom(libelle);
 
-
- /* @GetMapping("/afficherEventParCode/{code}")
-  public Evenements getEventWhitCodevotant(@PathVariable Long code){
-    return evenementsService.avoirEventParCodeVotant(code);
   }*/
+
+  @GetMapping("/getunvents/{libelle}")
+  public Object afficherUnEventParLibelle(@PathVariable("libelle") String libelle) {
+
+    return evenementsRepository.findByLibelle(libelle);
+  }
 
 
 

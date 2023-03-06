@@ -13,12 +13,19 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
 
   boolean existsByUserAndProjetsAndCriteres(User user, Projets projets, Criteres criteres);
 
+  boolean existsByCodevotantAndProjets(Codevotant codevotant, Projets projets);
 
-   List<Evaluation> findByUser(User user);
+  boolean existsByUserAndProjets(User user, Projets projets);
+
+
+
+    List<Evaluation> findByUser(User user);
 
    List<Evaluation> findByCodevotant(Codevotant codevotant);
 
   List<Evaluation> findByProjetsId(Long idProjets);
+
+ // List<Evaluation> findByCodevotantAndProjets(Codevotant codevotant, Projets projets);
 
 
 

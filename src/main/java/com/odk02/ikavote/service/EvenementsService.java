@@ -26,5 +26,7 @@ public interface EvenementsService {
 
   double calculerMoyenneTotaleDeTousLesProjets();
 
+  Boolean existsByNom(String libelle);
+
 
 }

@@ -155,57 +155,19 @@ public class UsersController {
     return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès!"));
   }
 
-  /*public ResponseEntity<?> registerDefaultUser(@Valid @RequestBody SignupRequest signUpRequest) {
-    if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-      return ResponseEntity
-        .badRequest()
-        .body(new MessageResponse("Erreur: le nom d'utilisateur est déjà pris!"));
-    }
+  @GetMapping("/checkusername/{username}")
+  // @PostAuthorize("hasAuthority('SUPERADMIN')")
+  public boolean checkUsername(@PathVariable("username") String username) {
 
-    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-      return ResponseEntity
-        .badRequest()
-        .body(new MessageResponse("Erreur: l'e-mail est déjà utilisé!"));
-    }
+    return usersService.checkUserByUsername(username);
 
-    // Créer un nouveau compte d'utilisateur
+  }
 
+  @GetMapping("/checkemail/{email}")
+  public boolean checkEmail(@PathVariable("email") String email) {
 
-    User user = new User(null,signUpRequest.getUsername(),
-      signUpRequest.getEmail(),
-      encoder.encode(signUpRequest.getPassword()),null, new HashSet<>());
+    return usersService.checkUserByEmail(email);
 
-    Set<String> strRoles = signUpRequest.getRole();
-    Set<Role> roles = new HashSet<>();
-
-    if (strRoles == null) {
-      Role userRole = roleRepository.findByName(ERole.ADMIN)
-        .orElseThrow(() -> new RuntimeException("Erreur: Role non trouvé"));
-      roles.add(userRole);
-    } else {
-      strRoles.forEach(role -> {
-        switch (role) {
-          case "admin":
-            Role adminRole = roleRepository.findByName(ERole.ADMIN)
-              .orElseThrow(() -> new RuntimeException("Erreur: Role non trouvé"));
-            roles.add(adminRole);
-            break;
-
-          default:
-            Role userRole = roleRepository.findByName(ERole.ADMIN)
-              .orElseThrow(() -> new RuntimeException("Erreur: Role non trouvé"));
-            roles.add(userRole);
-        }
-      });
-    }
-
-    user.setRoles(roles);
-    userRepository.save(user);
-
-    return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès!"));
-  }*/
-
-
-
+  }
 
 }

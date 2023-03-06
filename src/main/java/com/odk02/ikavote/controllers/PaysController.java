@@ -85,6 +85,13 @@ public class PaysController {
     return paysService.supprimerPays(id);
   }
 
+  @GetMapping("/checkPays/{nom}")
+  public boolean checkPays(@PathVariable("nom") String nom) {
+
+    return paysService.existsByNomPays(nom);
+
+  }
+
 
 
 }

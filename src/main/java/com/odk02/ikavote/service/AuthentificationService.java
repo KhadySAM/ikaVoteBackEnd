@@ -18,5 +18,5 @@ public interface AuthentificationService {
 
   List<Authentification> afficherTousLesTypesAuth();
 
- // Object generCode(Integer nbreVotant, Evenements evenements);
+  Boolean existsByTypeAuth(String libelle);
 }

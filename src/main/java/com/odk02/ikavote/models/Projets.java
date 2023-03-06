@@ -29,14 +29,9 @@ public class Projets {
 //  @Size(max =50)
   private  String description;
 
-  /*  private  Double moyJury;
-
- private  Double moyParcitipant;
-
-  private  Double moyTotal;*/
-
   @NotBlank
   private String images;
+
 
   //Les jointures
 

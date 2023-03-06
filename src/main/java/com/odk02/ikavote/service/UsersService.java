@@ -9,4 +9,8 @@ public interface UsersService {
   Object supprimerUsers(Long id);
 
 // User AfficherAdmin(Long id);
+
+  boolean checkUserByEmail(String email);
+
+  boolean checkUserByUsername(String username);
 }
