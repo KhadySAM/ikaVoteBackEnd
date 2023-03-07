@@ -86,6 +86,19 @@ public class EvenementsServiceImpl implements EvenementsService {
   }
 
   @Override
+  public Evenements modifier(Evenements evenements, Long id) {
+    Evenements evenements1 = evenementsRepository.findById(id).get();
+    evenements1.setLibelle(evenements.getLibelle());
+    evenements1.setDateDebut(evenements.getDateDebut());
+    evenements1.setDateFin(evenements.getDateFin());
+    evenements1.setNbreVotant(evenements.getNbreVotant());
+    evenements1.setBareme(evenements.getBareme());
+    evenements1.setCoefficientJury(evenements.getCoefficientJury());
+    evenements1.setCoefficientUser(evenements.getCoefficientJury());
+    return evenementsRepository.saveAndFlush(evenements1);
+  }
+
+  @Override
   public Object afficherEvenementsParId(Long id) {
 
     Optional<Evenements> evenements = evenementsRepository.findById(id);

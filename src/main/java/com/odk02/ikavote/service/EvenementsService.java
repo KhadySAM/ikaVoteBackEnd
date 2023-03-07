@@ -13,7 +13,7 @@ public interface EvenementsService {
   Object supprimerEvenements(Long id);
 
   Object ModifierEvenements(Evenements evenements, Long id);
-
+Evenements modifier(Evenements evenements, Long id);
   Object afficherEvenementsParId(Long id);
 
   List<Evenements> afficherTousLesEvenements();

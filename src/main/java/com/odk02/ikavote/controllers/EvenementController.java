@@ -118,47 +118,52 @@ public class EvenementController {
 
   }
 
+  @PutMapping("/modifiier/{id}")
+  public Evenements Modifier(@Param("evenements") Evenements evenements, @PathVariable Long id){
+    return evenementsService.modifier(evenements, id);
+  }
 
-    @PutMapping("/modifierevent/{id}")
-    public Object updatePays(@PathVariable Long id,
-                             @Param("libelle") String libelle,
-                             @Param("dateDebut") Date dateDebut,
-                             @Param("dateFin") Date dateFin,
-                             @Param("bareme") Long bareme,
-                             @Param("coefficientUser") Double coefficientUser,
-                             @Param("coefficientJury") Double coefficientJury,
-                             @Param("nbreVotant") Integer nbreVotant,
-                             @Param("file") MultipartFile file) throws IOException {
 
-      Random r=new Random();
-      List<String> reference=new ArrayList<>();
-      for (int i=0;i<nbreVotant;i++){
-        String element="";
-        for (int j=0;j<3;j++){
-          element+=r.nextInt(9);
-        }
-        reference.add(element);
-      }
-
-        Evenements evenements = new Evenements();
-        evenements.setLibelle(libelle);
-        evenements.setDateDebut(dateDebut);
-        evenements.setDateFin(dateFin);
-        evenements.setBareme(bareme);
-        evenements.setCoefficientUser(coefficientUser);
-        evenements.setCoefficientJury(coefficientJury);
-
-        evenements.setImages(ConfigImg.save(file,file.getOriginalFilename()));
-
-      if (evenements.getDateFin().before(evenements.getDateDebut())) {
-        return "La date de début ne peut pas être après la date de fin";
-      } else if (coefficientJury + coefficientUser != 100) {
-        return "Attention la somme des coefficients user et jury est toujours egale à 100% ";
-      }
-      else {
-        return evenementsService.ajouterEvenements(evenements);
-      }
-    }
+//    @PutMapping("/modifierevent/{id}")
+//    public Object updatePays(@PathVariable Long id,
+//                             @Param("libelle") String libelle,
+//                             @Param("dateDebut") Date dateDebut,
+//                             @Param("dateFin") Date dateFin,
+//                             @Param("bareme") Long bareme,
+//                             @Param("coefficientUser") Double coefficientUser,
+//                             @Param("coefficientJury") Double coefficientJury,
+//                             @Param("nbreVotant") Integer nbreVotant,
+//                             @Param("file") MultipartFile file) throws IOException {
+//
+//      Random r=new Random();
+//      List<String> reference=new ArrayList<>();
+//      for (int i=0;i<nbreVotant;i++){
+//        String element="";
+//        for (int j=0;j<3;j++){
+//          element+=r.nextInt(9);
+//        }
+//        reference.add(element);
+//      }
+//
+//        Evenements evenements = new Evenements();
+//        evenements.setLibelle(libelle);
+//        evenements.setDateDebut(dateDebut);
+//        evenements.setDateFin(dateFin);
+//        evenements.setBareme(bareme);
+//        evenements.setCoefficientUser(coefficientUser);
+//        evenements.setCoefficientJury(coefficientJury);
+//
+//        evenements.setImages(ConfigImg.save(file,file.getOriginalFilename()));
+//
+//      if (evenements.getDateFin().before(evenements.getDateDebut())) {
+//        return "La date de début ne peut pas être après la date de fin";
+//      } else if (coefficientJury + coefficientUser != 100) {
+//        return "Attention la somme des coefficients user et jury est toujours egale à 100% ";
+//      }
+//      else {
+//        return evenementsService.ModifierEvenements();
+//      }
+//    }
 
     @DeleteMapping("/supprimevent/{id}")
     public Object delete(@PathVariable Long id) {
@@ -166,12 +171,12 @@ public class EvenementController {
         return evenementsService.supprimerEvenements(id);
     }
 
-/*  @GetMapping("/checkevent/{libelle}")
+  @GetMapping("/checkevent/{libelle}")
   public boolean checkEmail(@PathVariable("libelle") String libelle) {
 
     return evenementsService.existsByNom(libelle);
 
-  }*/
+  }
 
   @GetMapping("/getunvents/{libelle}")
   public Object afficherUnEventParLibelle(@PathVariable("libelle") String libelle) {
